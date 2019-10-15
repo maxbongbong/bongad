@@ -2,7 +2,6 @@ package com.bong.splash;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Toast;
 
 public class SubActivity extends AppCompatActivity {
 
