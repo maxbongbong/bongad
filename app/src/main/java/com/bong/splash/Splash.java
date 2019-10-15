@@ -5,6 +5,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import androidx.appcompat.app.AppCompatActivity;
 
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.GET;
+
 public class Splash extends AppCompatActivity {
 
     @Override
@@ -22,9 +26,14 @@ public class Splash extends AppCompatActivity {
         }
     }
 
+
     @Override
     public void onBackPressed() {
         //초반 플래시 화면에서 넘어갈때 뒤로가기 버튼 못누르게 함
     }
+
+
 }
+
+
 
