@@ -26,7 +26,11 @@
         android:hint="@string/edit_massage"
         android:inputType="none"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         tools:targetApi="o" />
 
     <Button
@@ -36,9 +40,13 @@
         android:background="@color/colorPrimary"
         android:text="@string/btn_01"
         app:autoSizeTextType="uniform"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="161dp"
-        tools:layout_editor_absoluteY="341dp" />
+        app:layout_constraintBottom_toBottomOf="@+id/edit_massage"
+        app:layout_constraintEnd_toEndOf="@+id/edit_massage"
+        app:layout_constraintHorizontal_bias="0.517"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/edit_massage"
+        app:layout_constraintVertical_bias="0.499"
+        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/join_button"
