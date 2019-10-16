@@ -3,4 +3,7 @@
     <string name="welcome">환영합니다</string>
     <string name="btn_01">조회하기</string>
     <string name="btn_1">시작하기</string>
+    <string name="Splash">lotto</string>
+    <string name="edit_massage">문자를 입력해주세요</string>
+    <string name="send_button"></string>
 </resources>

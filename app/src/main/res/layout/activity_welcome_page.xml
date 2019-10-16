@@ -22,10 +22,10 @@
 
     <Button
         android:id="@+id/start_button"
-        android:layout_width="410dp"
-        android:layout_height="90dp"
+        android:layout_width="409dp"
+        android:layout_height="60dp"
+        android:background="@color/colorPrimary"
         android:text="@string/btn_1"
-        android:background="@color/colorAccent"
         app:autoSizeTextType="uniform"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
