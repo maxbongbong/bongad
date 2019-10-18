@@ -11,7 +11,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface Apiservice {
-    public static final String API_URL = "https://www.dhlottery.co.kr/";
+    String API_URL = "https://www.dhlottery.co.kr/";
 
     @GET ("common.do?method=getLottoNumber")
     Call<Lotto>getComment(@Query("drwNo") int drwNo);
