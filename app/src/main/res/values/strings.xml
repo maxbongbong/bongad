@@ -7,5 +7,5 @@
     <string name="edit_massage">문자를 입력해주세요</string>
     <string name="send_button"></string>
     <string name="baseUrl">https://www.dhlottery.co.kr/common.do?method=getLottoNumber&amp;drwNo=</string>
-    <string name="downloading_lotto_data"></string>
+    <string name="downloading_lotto_data">Downloading Lotto data</string>
 </resources>

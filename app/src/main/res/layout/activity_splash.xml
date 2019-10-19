@@ -10,6 +10,7 @@
     android:visibility="visible">
 
     <ImageView
+        android:id="@+id/splash"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_centerHorizontal="true"
@@ -21,7 +22,33 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.382" tools:targetApi="lollipop"/>
+        app:layout_constraintVertical_bias="0.382" tools:targetApi="lollipop" />
+
+    <LinearLayout
+        android:id="@+id/v_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/splash"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
+        <com.github.ybq.android.spinkit.SpinKitView
+            style="@style/SpinKitView.Small.Wave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:SpinKit_Color="@color/colorAccent"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/downloading_lotto_data"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+            />
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
