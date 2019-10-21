@@ -4,6 +4,7 @@ import android.app.Application;
 import android.os.AsyncTask;
 import androidx.lifecycle.LiveData;
 import com.bong.splash.data.Lotto;
+import com.bong.splash.room.AppDatabase;
 import com.bong.splash.room.LottoDao;
 import com.bong.splash.room.WordLottoDataBase;
 import java.util.List;
@@ -17,7 +18,7 @@ class LottoRepository{
     private LiveData<List<Lotto>> loadAllLottos;
 
     LottoRepository(Application application) {
-        WordLottoDataBase db = WordLottoDataBase.getDatabase(application);
+        AppDatabase.AppDataBase db = AppDatabase.AppDataBase
         mlottoDao = db.lottoDao();
         loadAllLottos = mlottoDao.getAlphabetizedWords();
     }
