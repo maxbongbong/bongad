@@ -1,4 +1,4 @@
-package com.bong.splash.room;
+package com.bong.splash.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bong.splash.R;
 import com.bong.splash.data.Lotto;
 import com.bong.splash.data.Apiservice;
+import com.bong.splash.network.RetrofitMaker;
 
 import retrofit2.Call;
 import retrofit2.Callback;

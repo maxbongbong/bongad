@@ -1,4 +1,4 @@
-package com.bong.splash.room;
+package com.bong.splash.network;
 
 import android.content.Context;
 import android.util.Log;
@@ -93,7 +93,7 @@ public class RetrofitMaker {
                     }
 
                 });
-                logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+                logging.level(HttpLoggingInterceptor.Level.BODY);
                 httpClientBuilder.addInterceptor(logging);
 
             }

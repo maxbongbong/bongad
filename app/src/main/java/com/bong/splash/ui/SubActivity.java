@@ -1,4 +1,4 @@
-package com.bong.splash.room;
+package com.bong.splash.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
