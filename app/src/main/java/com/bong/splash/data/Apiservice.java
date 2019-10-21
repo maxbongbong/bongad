@@ -1,4 +1,4 @@
-package com.bong.splash.lottoapi;
+package com.bong.splash.data;
 
 import com.bong.splash.data.Lotto;
 
