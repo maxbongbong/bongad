@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData;
 import com.bong.splash.data.Lotto;
 import com.bong.splash.room.AppDatabase;
 import com.bong.splash.room.LottoDao;
-import com.bong.splash.room.WordLottoDataBase;
 import java.util.List;
 
 interface LottoDatasource{
