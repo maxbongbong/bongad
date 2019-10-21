@@ -1,4 +1,4 @@
-package com.bong.splash;
+package com.bong.splash.room;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -6,7 +6,9 @@ import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bong.splash.R;
 import com.bong.splash.data.Lotto;
+import com.bong.splash.lottoapi.Apiservice;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,13 +18,8 @@ import io.reactivex.Flowable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.observers.DisposableCompletableObserver;
-import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subscribers.DisposableSubscriber;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -77,7 +74,8 @@ public class SplashActivity extends AppCompatActivity {
                             //.map()//return 객체
                             //.flatMap()//single
                             .map(lotto -> {
-                                Log.e("SplashBong", "lotto 서버통신: " + lotto.drwNo + "," + lotto.drwNoDate);
+                                Log.e(
+                                        "SplashBong", "lotto 서버통신: " + lotto.drwNo + "," + lotto.drwNoDate + "," + lotto.drwtNo1 + "," + lotto.drwtNo2 + "," + lotto.drwtNo3 + "," + lotto.drwtNo4 + "," + lotto.drwtNo5 + "," + lotto.drwtNo6 + "," + lotto.bnusNo + "," );
                                 saveLottoToRoom(lotto);  //디비에 저장
                                 return lotto;
                             })

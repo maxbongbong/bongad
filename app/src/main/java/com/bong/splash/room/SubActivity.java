@@ -1,7 +1,9 @@
-package com.bong.splash;
+package com.bong.splash.room;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.bong.splash.R;
 
 public class SubActivity extends AppCompatActivity {
 

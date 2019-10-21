@@ -1,4 +1,4 @@
-package com.bong.splash;
+package com.bong.splash.room;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,11 +7,10 @@ import android.view.View;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bong.splash.R;
 import com.bong.splash.data.Lotto;
+import com.bong.splash.lottoapi.Apiservice;
 
-import java.io.IOException;
-
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
