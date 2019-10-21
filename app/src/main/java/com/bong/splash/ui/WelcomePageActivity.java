@@ -1,4 +1,4 @@
-package com.bong.splash.room;
+package com.bong.splash.ui;
 
 import android.content.Context;
 import android.content.Intent;

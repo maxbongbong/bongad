@@ -1,4 +1,4 @@
-package com.bong.splash.room;
+package com.bong.splash.ui;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bong.splash.R;
 import com.bong.splash.data.Lotto;
 import com.bong.splash.data.Apiservice;
+import com.bong.splash.network.RetrofitMaker;
+import com.bong.splash.room.AppDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,7 +95,7 @@ public class SplashActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Throwable t) {
-
+                        t.printStackTrace();
                     }
 
                     @Override
@@ -183,6 +185,7 @@ public class SplashActivity extends AppCompatActivity {
     void saveLottoToRoom(Lotto lotto) {
         //여기에 로또 저장하기 넣기
         Log.e("SplashBong", "lotto 저장: " + lotto.drwNo);
+        AppDatabase.getDatabase(this).getLottoDao().insertLotto(lotto);
     }
 
     /*void oneApi() {
