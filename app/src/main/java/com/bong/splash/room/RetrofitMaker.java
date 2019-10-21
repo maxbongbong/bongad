@@ -1,8 +1,10 @@
-package com.bong.splash;
+package com.bong.splash.room;
 
 import android.content.Context;
 import android.util.Log;
 
+import com.bong.splash.BuildConfig;
+import com.bong.splash.lottoapi.Apiservice;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.orhanobut.logger.Logger;
