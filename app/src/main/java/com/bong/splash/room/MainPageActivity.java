@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bong.splash.R;
 import com.bong.splash.data.Lotto;
-import com.bong.splash.lottoapi.Apiservice;
+import com.bong.splash.data.Apiservice;
 
 import retrofit2.Call;
 import retrofit2.Callback;

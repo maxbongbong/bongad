@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bong.splash.R;
 import com.bong.splash.data.Lotto;
-import com.bong.splash.lottoapi.Apiservice;
+import com.bong.splash.data.Apiservice;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,8 +74,7 @@ public class SplashActivity extends AppCompatActivity {
                             //.map()//return 객체
                             //.flatMap()//single
                             .map(lotto -> {
-                                Log.e(
-                                        "SplashBong", "lotto 서버통신: " + lotto.drwNo + "," + lotto.drwNoDate + "," + lotto.drwtNo1 + "," + lotto.drwtNo2 + "," + lotto.drwtNo3 + "," + lotto.drwtNo4 + "," + lotto.drwtNo5 + "," + lotto.drwtNo6 + "," + lotto.bnusNo + "," );
+                                Log.e("SplashBong", "lotto 서버통신: " + lotto.drwNo + "," + lotto.drwNoDate);
                                 saveLottoToRoom(lotto);  //디비에 저장
                                 return lotto;
                             })

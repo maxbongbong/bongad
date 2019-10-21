@@ -21,5 +21,4 @@ public class Lotto {
     public float firstPrzwnerCo;
     public float firstAccumamnt;
 
-
 }
