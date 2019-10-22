@@ -1,7 +1,5 @@
 package com.bong.splash.data;
 
-import com.bong.splash.data.Lotto;
-
 import io.reactivex.Single;
 import retrofit2.Call;
 import retrofit2.http.GET;

@@ -3,65 +3,190 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/spacing_large"
+    android:paddingBottom="@dimen/spacing_large"
     tools:context=".ui.SplashActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.431" />
-
-    <EditText
-        android:id="@+id/edit_massage"
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/layout_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:autofillHints=""
-        android:hint="@string/edit_massage"
-        android:inputType="none"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        tools:targetApi="o" />
+        android:fillViewport="true"
+        android:fadingEdge="none">
 
-    <Button
-        android:id="@+id/sned_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:text="@string/btn_01"
-        app:autoSizeTextType="uniform"
-        app:layout_constraintBottom_toBottomOf="@+id/edit_massage"
-        app:layout_constraintEnd_toEndOf="@+id/edit_massage"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/edit_massage"
-        app:layout_constraintVertical_bias="0.499"
-        tools:ignore="MissingConstraints" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/spacing_large"
+            android:paddingBottom="@dimen/spacing_large"
+            >
 
-    <Button
-        android:id="@+id/join_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:text="@string/btn_1"
-        app:autoSizeTextType="uniform"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.814" />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/v_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="6dp"
+                app:cardElevation="2dp"
+                app:cardUseCompatPadding="true"
+                android:layout_margin="@dimen/spacing_smlarge"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/v_result" >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/spacing_large" >
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        >
 
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/tv_event_number"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/event_number"
+                            android:drawableLeft="@drawable/round_search_black_24"
+                            android:drawableTint="@color/grey_40"
+                            android:drawablePadding="10dp"
+                            style="@style/EditTextDefault"
+                            android:inputType="number"
+                            android:textSize="15sp"
+                            android:drawableStart="@drawable/round_search_black_24" tools:targetApi="m" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/bt_generate"
+                        android:text="@string/generate_lotto"
+                        style="@style/NextButtonDefault"
+                        app:cornerRadius="3dp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/v_result"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="6dp"
+                app:cardElevation="2dp"
+                app:cardUseCompatPadding="true"
+                android:layout_margin="@dimen/spacing_smlarge"
+                android:visibility="gone"
+                tools:visibility="visible"
+                app:layout_constraintTop_toBottomOf="@+id/v_content"
+                app:layout_constraintBottom_toTopOf="@+id/v_space"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/spacing_large">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:text="@string/generated_loto"
+                        android:textColor="@color/colorAccent"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
+                        />
+                    <TextView
+                        android:id="@+id/tv_lotto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/spacing_large"
+                        android:paddingBottom="@dimen/spacing_large"
+                        android:gravity="center_horizontal"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
+                        tools:text="3, 5, 2, 49, 29, 1 + 24"
+                        />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/bt_match"
+                            android:text="@string/result"
+                            android:layout_centerInParent="true"
+                            android:layout_marginTop="@dimen/spacing_large"
+                            style="@style/NextButtonDefault"
+                            app:backgroundTint="@color/colorAccent"
+                            app:cornerRadius="3dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <com.github.ybq.android.spinkit.SpinKitView
+                            android:id="@+id/v_loading"
+                            style="@style/SpinKitView.Large.ThreeBounce"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:visibility="gone"
+                            app:SpinKit_Color="@color/colorAccent"
+                            />
+                    </RelativeLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <View
+                android:id="@+id/v_space"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintVertical_weight="1"
+                app:layout_constraintTop_toBottomOf="@+id/v_result"
+                app:layout_constraintBottom_toTopOf="@+id/v_bottom"
+                >
+            </View>
+            <LinearLayout
+                android:id="@+id/v_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/spacing_smlarge"
+                android:paddingRight="@dimen/spacing_smlarge"
+                app:layout_constraintTop_toBottomOf="@+id/v_space"
+                app:layout_constraintBottom_toBottomOf="parent">
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bt_history"
+                    android:text="@string/button_history"
+                    style="@style/NextButtonOutLined"
+                    app:cornerRadius="3dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bt_trend"
+                    android:text="@string/button_trend"
+                    style="@style/NextButtonOutLined"
+                    app:cornerRadius="3dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase;
 
 import com.bong.splash.data.Lotto;
 
-@Database(entities = {Lotto.class}, version = 1)
+@Database(entities = {Lotto.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract LottoDao getLottoDao();
 
@@ -25,5 +25,5 @@ public abstract class AppDatabase extends RoomDatabase {
         }
     }
     return INSTANCE;
-}
+    }
 }

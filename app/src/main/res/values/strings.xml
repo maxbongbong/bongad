@@ -1,11 +1,52 @@
 <resources>
-    <string name="app_name">로또엡</string>
-    <string name="welcome">환영합니다</string>
-    <string name="btn_01">조회하기</string>
-    <string name="btn_1">시작하기</string>
-    <string name="Splash">lotto</string>
-    <string name="edit_massage">문자를 입력해주세요</string>
-    <string name="send_button"></string>
-    <string name="baseUrl">https://www.dhlottery.co.kr/common.do?method=getLottoNumber&amp;drwNo=</string>
+    <string name="app_name">Lotto App</string>
+
     <string name="downloading_lotto_data">Downloading Lotto data</string>
+    <string name="sync_data_retry">Retriving data from the server has failed. Would you like to retry?</string>
+
+    <!-- Title -->
+    <string name="title_main">Main</string>
+    <string name="title_splash">Splash</string>
+    <string name="title_welcome">Welcome</string>
+    <string name="title_history">History</string>
+    <string name="title_trend">Trend</string>
+    <string name="title_winning_numbers">Winning Numbers</string>
+
+    <!-- Retry -->
+    <string name="button_retry">Retry</string>
+    <string name="button_ok">OK</string>
+    <string name="button_signin">Sign In</string>
+
+    <!-- Welcome -->
+    <string name="welcome_title">Feeling of lucky?</string>
+    <string name="welcome_message">If you want to start, please tap OK.</string>
+
+    <!-- Main -->
+    <string name="event_number">로또 회차 조회</string>
+    <string name="generate_lotto">조회하기</string>
+    <string name="generated_loto">Your Lotto</string>
+    <string name="result">Result</string>
+    <string name="button_history">History</string>
+    <string name="button_trend">Trend</string>
+
+    <!-- Popup -->
+    <string name="title_win">Congratulations!</string>
+    <string name="title_lose">Unlucky!</string>
+    <string name="message_win">Your ranking is %d</string>
+    <string name="message_lost">Sorry, maybe next time.\n\nYours: %s,\nWinning Numbers: %s</string>
+    <string name="please_wait">Please Wait..</string>
+
+    <!-- Trend -->
+    <string name="no">No. %d</string>
+    <string name="times">%d times</string>
+    <string name="time">%d time</string>
+
+    <!-- Search -->
+    <string name="winning_numbers">Winning Numbers for Round %d</string>
+
+    <!-- Error Message-->
+    <string name="error_code">The server API usage is not correct. Please check your API specification document.</string>
+    <string name="error_argument">Input data is not appropriate. Please check your input data and try again.</string>
+    <string name="error_unknown">There is an error in connecting to the server. Please check this out.</string>
+    <string name="logo">TODO</string>
 </resources>
