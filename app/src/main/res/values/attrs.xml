@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ShadowView">
+        <attr name="size" format="dimension" />
+        <attr name="direction" format="enum">
+            <enum name="up_down" value="0" />
+            <enum name="down_up" value="1" />
+        </attr>
+        <attr name="brightness" format="enum">
+            <enum name="dark" value="0" />
+            <enum name="mid" value="1" />
+            <enum name="light" value="2" />
+        </attr>
+        <attr name="lightMode" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="IconImageView">
+        <attr name="imageColor" format="color" />
+    </declare-styleable>
+</resources>
