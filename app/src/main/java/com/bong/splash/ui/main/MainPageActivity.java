@@ -31,14 +31,14 @@ public class MainPageActivity extends AppCompatActivity {
 
         Button history_button = findViewById(R.id.bt_match);
         history_button.setOnClickListener(v -> {
-            Intent intent = new Intent(getApplicationContext(), HistoryActivity.class);
-            startActivity(intent);
+            Intent intent1 = new Intent(getApplicationContext(), HistoryActivity.class);
+            startActivity(intent1);
         });
 
         Button trend_button = findViewById(R.id.bt_trend);
         trend_button.setOnClickListener(v -> {
-            Intent intent = new Intent(getApplicationContext(), TrendActivity.class);
-            startActivity(intent);
+            Intent intent2 = new Intent(getApplicationContext(), TrendActivity.class);
+            startActivity(intent2);
         });
 
         callAPIs();

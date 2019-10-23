@@ -3,12 +3,9 @@ package com.bong.splash.ui.welcome;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.bong.splash.R;
 import com.bong.splash.ui.main.MainPageActivity;
 
@@ -25,12 +22,9 @@ public class WelcomePageActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_welcome_page);
         Button start_button = findViewById(R.id.start_button);
-        start_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainPageActivity.class);
-                startActivity(intent);
-            }
+        start_button.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), MainPageActivity.class);
+            startActivity(intent);
         });
 
         TextView tv_welcome = findViewById(R.id.tv_welcome);
