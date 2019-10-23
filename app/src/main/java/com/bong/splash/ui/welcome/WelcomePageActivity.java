@@ -1,4 +1,4 @@
-package com.bong.splash.ui;
+package com.bong.splash.ui.welcome;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bong.splash.R;
+import com.bong.splash.ui.main.MainPageActivity;
 
 public class WelcomePageActivity extends AppCompatActivity {
     public static void launch(Context context, String message) {

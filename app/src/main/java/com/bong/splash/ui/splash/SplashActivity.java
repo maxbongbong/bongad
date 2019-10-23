@@ -1,20 +1,18 @@
-package com.bong.splash.ui;
+package com.bong.splash.ui.splash;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.bong.splash.R;
 import com.bong.splash.data.Lotto;
 import com.bong.splash.data.Apiservice;
 import com.bong.splash.network.RetrofitMaker;
 import com.bong.splash.room.AppDatabase;
+import com.bong.splash.ui.welcome.WelcomePageActivity;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
@@ -100,7 +98,7 @@ public class SplashActivity extends AppCompatActivity {
 
                     @Override
                     public void onComplete() {
-                        WelcomePageActivity.launch(SplashActivity.this, getString(R.string.welcome));
+                        WelcomePageActivity.launch(SplashActivity.this, getString(R.string.welcome_title));
                         SplashActivity.this.finish(); // 로딩페이지 Activity stack에서 제거
                     }
                 }));

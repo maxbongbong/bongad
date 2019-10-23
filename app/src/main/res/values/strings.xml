@@ -18,8 +18,9 @@
     <string name="button_signin">Sign In</string>
 
     <!-- Welcome -->
-    <string name="welcome_title">Feeling of lucky?</string>
-    <string name="welcome_message">If you want to start, please tap OK.</string>
+
+    <string name="welcome_title">환영합니다</string>
+    <string name="welcome_message">시작하기</string>
 
     <!-- Main -->
     <string name="event_number">로또 회차 조회</string>

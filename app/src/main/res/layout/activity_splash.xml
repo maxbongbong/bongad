@@ -14,7 +14,7 @@
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_centerHorizontal="true"
-        android:contentDescription="@string/Splash"
+        android:contentDescription="@string/welcome_title"
         android:src="@drawable/splash"
         android:transitionName="icon"
         app:layout_constraintBottom_toBottomOf="parent"

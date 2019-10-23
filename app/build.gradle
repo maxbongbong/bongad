@@ -68,12 +68,12 @@ dependencies {
     annotationProcessor "androidx.lifecycle:lifecycle-compiler:$archLifecycleVersion"
 
     /**
-     *UI
+     * UI
      */
     implementation "com.google.android.material:material:$materialVersion"
 
     /**
-     *Testing
+     * Testing
      */
     androidTestImplementation "androidx.arch.core:core-testing:$coreTestingVersion"
 
