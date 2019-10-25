@@ -22,5 +22,4 @@ public class Lotto {
     public String firstWinamnt;
     public String firstPrzwnerCo;
     public String firstAccumamnt;
-
 }

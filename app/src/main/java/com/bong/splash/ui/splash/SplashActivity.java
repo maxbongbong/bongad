@@ -1,35 +1,39 @@
 package com.bong.splash.ui.splash;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 import com.bong.splash.R;
-import com.bong.splash.data.Lotto;
 import com.bong.splash.data.Apiservice;
+import com.bong.splash.data.Lotto;
 import com.bong.splash.network.RetrofitMaker;
 import com.bong.splash.room.AppDatabase;
+import com.bong.splash.room.LottoDao;
 import com.bong.splash.ui.welcome.WelcomePageActivity;
-
 import java.util.ArrayList;
 import java.util.List;
-import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subscribers.DisposableSubscriber;
 
 public class SplashActivity extends AppCompatActivity {
 
     protected CompositeDisposable disposables;
+    LottoDao dao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         disposables = new CompositeDisposable();
+
+        dao = AppDatabase.getDatabase(this).getLottoDao();
 
         getLottosAndSave();
     }
@@ -60,6 +64,9 @@ public class SplashActivity extends AppCompatActivity {
                             }
                         })
         );
+
+
+
 */
 
 
@@ -76,6 +83,7 @@ public class SplashActivity extends AppCompatActivity {
                             .map(lotto -> {
                                 Log.e("SplashBong", "lotto 서버통신: " + lotto.drwNo + "," + lotto.drwNoDate);
                                 saveLottoToRoom(lotto);  //디비에 저장
+
                                 return lotto;
                             })
 
@@ -126,7 +134,6 @@ public class SplashActivity extends AppCompatActivity {
                 }));*/
 
 
-
         //room에 lotto를 저장하기
         /*disposables.add(saveLottoToRoomRx(Lotto())
                 .subscribeOn(Schedulers.io())
@@ -144,26 +151,30 @@ public class SplashActivity extends AppCompatActivity {
                 }));*/
 
         //디비에서 가져오기
-        /*disposables.add(getLotto(0)
+        disposables.add(AppDatabase.getDatabase(this).getLottoDao().findLotto(1)     //getLotto(1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<Lotto>() {
+
                     @Override
                     public void onSuccess(Lotto lotto) {
+                        System.out.println(lotto);
 
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        e.printStackTrace();
                     }
-                }));*/
+
+                }));
     }
 
     //디비에서 가져오기
     Single<Lotto> getLotto(int lottoNo) {
         //여기에 로또 저장하기 넣기
-        return Single.just(new Lotto());
+        //return Single.just(new Lotto());
+        return dao.findLotto(lottoNo);
     }
 
     Single<List<Lotto>> getLottos(int lottoNo) {
@@ -174,16 +185,18 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     //rxjava
-    Completable saveLottoToRoomRx(Lotto lotto) {
-        //여기에 로또 저장하기 넣기
-        return Completable.complete();
-    }
+//    Completable saveLottoToRoomRx(Lotto lotto) {
+//        //여기에 로또 저장하기 넣기
+//
+//        return Completable.complete();
+//    }
 
     //normal
     void saveLottoToRoom(Lotto lotto) {
         //여기에 로또 저장하기 넣기
         Log.e("SplashBong", "lotto 저장: " + lotto.drwNo);
-        AppDatabase.getDatabase(this).getLottoDao().insertLotto(lotto);
+        if (dao != null)
+            dao.insertLotto(lotto);
     }
 
     /*void oneApi() {
@@ -196,6 +209,12 @@ public class SplashActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Lotto lotto) {
                         Log.e("SplashBong", "lotto: " + lotto.drwNo + "," + lotto.drwNoDate);
+
+
+                        efef
+                        efef
+                        ef
+
                     }
 
                     @Override
@@ -206,8 +225,8 @@ public class SplashActivity extends AppCompatActivity {
     }*/
 
 
-    class AutoSave{
-        Flowable<Lotto> getLottoAndSave(Context context, int start, int end){
+    class AutoSave {
+        Flowable<Lotto> getLottoAndSave(Context context, int start, int end) {
             Apiservice apiService = new RetrofitMaker().createService(context, Apiservice.class);
 
             // 복수개 통신

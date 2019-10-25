@@ -14,63 +14,65 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        android:fadingEdge="none">
+        android:fadingEdge="none"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/spacing_large"
-            android:paddingBottom="@dimen/spacing_large"
-            >
+            android:paddingBottom="@dimen/spacing_large">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/v_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_smlarge"
                 app:cardCornerRadius="6dp"
                 app:cardElevation="2dp"
                 app:cardUseCompatPadding="true"
-                android:layout_margin="@dimen/spacing_smlarge"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/v_result"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/v_result" >
+                app:layout_constraintTop_toTopOf="parent">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="@dimen/spacing_large" >
+                    android:padding="@dimen/spacing_large">
+
                     <com.google.android.material.textfield.TextInputLayout
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="20dp"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        >
+                        app:layout_constraintRight_toRightOf="parent">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/tv_event_number"
+                            style="@style/EditTextDefault"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="@string/event_number"
+                            android:drawableStart="@drawable/round_search_black_24"
                             android:drawableLeft="@drawable/round_search_black_24"
-                            android:drawableTint="@color/grey_40"
                             android:drawablePadding="10dp"
-                            style="@style/EditTextDefault"
+                            android:drawableTint="@color/grey_40"
+                            android:hint="@string/event_number"
                             android:inputType="number"
                             android:textSize="15sp"
-                            android:drawableStart="@drawable/round_search_black_24" tools:targetApi="m" />
+                            tools:targetApi="m" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/bt_generate"
-                        android:text="@string/generate_lotto"
                         style="@style/NextButtonDefault"
+                        android:text="@string/generate_lotto"
                         app:cornerRadius="3dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent" />
+                        app:layout_constraintRight_toRightOf="parent" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -78,55 +80,57 @@
                 android:id="@+id/v_result"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_smlarge"
+                android:visibility="gone"
                 app:cardCornerRadius="6dp"
                 app:cardElevation="2dp"
                 app:cardUseCompatPadding="true"
-                android:layout_margin="@dimen/spacing_smlarge"
-                android:visibility="gone"
-                tools:visibility="visible"
-                app:layout_constraintTop_toBottomOf="@+id/v_content"
                 app:layout_constraintBottom_toTopOf="@+id/v_space"
-                >
+                app:layout_constraintTop_toBottomOf="@+id/v_content"
+                tools:visibility="visible">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="@dimen/spacing_large">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
                         android:text="@string/generated_loto"
-                        android:textColor="@color/colorAccent"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
-                        />
+                        android:textColor="@color/colorAccent" />
+
                     <TextView
                         android:id="@+id/tv_lotto"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
                         android:paddingTop="@dimen/spacing_large"
                         android:paddingBottom="@dimen/spacing_large"
-                        android:gravity="center_horizontal"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
-                        tools:text="3, 5, 2, 49, 29, 1 + 24"
-                        />
+                        android:text="3, 5, 2, 49, 29, 1 + 24"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/bt_match"
-                            android:text="@string/result"
+                            style="@style/NextButtonDefault"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
                             android:layout_marginTop="@dimen/spacing_large"
-                            style="@style/NextButtonDefault"
+                            android:text="@string/result"
                             app:backgroundTint="@color/colorAccent"
                             app:cornerRadius="3dp"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent" />
+
                         <com.github.ybq.android.spinkit.SpinKitView
                             android:id="@+id/v_loading"
                             style="@style/SpinKitView.Large.ThreeBounce"
@@ -134,8 +138,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
                             android:visibility="gone"
-                            app:SpinKit_Color="@color/colorAccent"
-                            />
+                            app:SpinKit_Color="@color/colorAccent" />
                     </RelativeLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -144,11 +147,9 @@
                 android:id="@+id/v_space"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                app:layout_constraintVertical_weight="1"
-                app:layout_constraintTop_toBottomOf="@+id/v_result"
                 app:layout_constraintBottom_toTopOf="@+id/v_bottom"
-                >
-            </View>
+                app:layout_constraintTop_toBottomOf="@+id/v_result"
+                app:layout_constraintVertical_weight="1"></View>
 
             <LinearLayout
                 android:id="@+id/v_bottom"
@@ -164,8 +165,10 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/bt_history"
+                    android:textColor="@color/line_title"
                     style="@style/NextButtonOutLined"
                     android:text="@string/button_history"
+                    app:backgroundTint="@color/colorAccent"
                     app:cornerRadius="3dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -175,6 +178,8 @@
                     android:id="@+id/bt_trend"
                     style="@style/NextButtonOutLined"
                     android:text="@string/button_trend"
+                    android:textColor="@color/line_title"
+                    app:backgroundTint="@color/colorAccent"
                     app:cornerRadius="3dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
