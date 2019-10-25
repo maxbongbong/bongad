@@ -26,9 +26,9 @@ import retrofit2.Response;
 
 public class MainPageActivity extends AppCompatActivity {
 
-    TextView v_result = findViewById(R.id.v_result);
     protected CompositeDisposable disposables;
     LottoDao dao;
+    TextView tv_lotto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +39,6 @@ public class MainPageActivity extends AppCompatActivity {
         join_button.setOnClickListener(v -> {
             View view = findViewById(R.id.v_result);
             view.setVisibility(View.VISIBLE);
-
 
         });
 
@@ -55,19 +54,26 @@ public class MainPageActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        getLotto();
         callAPIs();
     }
 
     void getLotto() {
 
-        disposables.add(AppDatabase.getDatabase(this).getLottoDao().findLotto(1)     //getLotto(1)
+        disposables.add(AppDatabase.getDatabase(this).getLottoDao().findLotto(1)
+                //getLotto(1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<Lotto>() {
 
                     @Override
                     public void onSuccess(Lotto lotto) {
-                        Log.e("Lotto", "로또 뿌리기 : " + lotto.drwNo);
+
+                        Log.e("LottoDBJoin", "DbJoin" + lotto.drwNo + "," + lotto.drwNoDate);
+
+//                        if (tv_lotto != null)
+//                        tv_lotto.setText(lotto.drwNo);
+
 
                     }
 
@@ -78,6 +84,8 @@ public class MainPageActivity extends AppCompatActivity {
 
                 }));
     }
+
+
 
     //디비에서 가져오기
     Single<Lotto> getLotto(int lottoNo) {

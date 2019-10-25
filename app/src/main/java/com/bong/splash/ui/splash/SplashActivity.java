@@ -1,7 +1,6 @@
 package com.bong.splash.ui.splash;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
@@ -69,7 +68,6 @@ public class SplashActivity extends AppCompatActivity {
 
 */
 
-
         Apiservice apiService = new RetrofitMaker().createService(this, Apiservice.class);
 
         // 복수개 통신
@@ -77,7 +75,7 @@ public class SplashActivity extends AppCompatActivity {
         for (int i = 1; i <= 50; i++) {
             list.add(
                     apiService.getCommentRx(i)   //서버통신
-                            .subscribeOn(Schedulers.io())
+                            // .subscribeOn(Schedulers.io())
                             //.map()//return 객체
                             //.flatMap()//single
                             .map(lotto -> {
@@ -86,12 +84,11 @@ public class SplashActivity extends AppCompatActivity {
 
                                 return lotto;
                             })
-
-
             );
         }
 
-        disposables.add(Single.concat(list)     //서버통신 + 디비저장 50번 하기를 실행시작
+        final boolean add = disposables.add(Single.concat(list)     //서버통신 + 디비저장 50번 하기를 실행시작
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSubscriber<Lotto>() {
                     @Override
@@ -158,7 +155,7 @@ public class SplashActivity extends AppCompatActivity {
 
                     @Override
                     public void onSuccess(Lotto lotto) {
-                        System.out.println(lotto);
+//                        System.out.println(lotto);
 
                     }
 
