@@ -148,31 +148,30 @@ public class SplashActivity extends AppCompatActivity {
                 }));*/
 
         //디비에서 가져오기
-        disposables.add(AppDatabase.getDatabase(this).getLottoDao().findLotto(1)     //getLotto(1)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSingleObserver<Lotto>() {
-
-                    @Override
-                    public void onSuccess(Lotto lotto) {
-//                        System.out.println(lotto);
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        e.printStackTrace();
-                    }
-
-                }));
+//        disposables.add(AppDatabase.getDatabase(this).getLottoDao().findLotto(1)     //getLotto(1)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribeWith(new DisposableSingleObserver<Lotto>() {
+//
+//                    @Override
+//                    public void onSuccess(Lotto lotto) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                }));
     }
 
     //디비에서 가져오기
-    Single<Lotto> getLotto(int lottoNo) {
-        //여기에 로또 저장하기 넣기
-        //return Single.just(new Lotto());
-        return dao.findLotto(lottoNo);
-    }
+//    Single<Lotto> getLotto(int lottoNo) {
+//        //여기에 로또 저장하기 넣기
+//        //return Single.just(new Lotto());
+//        return dao.findLotto(lottoNo);
+//    }
 
     Single<List<Lotto>> getLottos(int lottoNo) {
         //여기에 로또 저장하기 넣기
