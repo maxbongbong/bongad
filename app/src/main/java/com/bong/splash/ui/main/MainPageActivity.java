@@ -7,7 +7,6 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,7 +19,12 @@ import com.bong.splash.room.LottoDao;
 import com.bong.splash.ui.history.HistoryActivity;
 import com.bong.splash.ui.trend.TrendActivity;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
+
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -34,8 +38,8 @@ public class MainPageActivity extends AppCompatActivity {
 
     protected CompositeDisposable disposables;
     LottoDao dao;
-//    TextView tv = new TextView(this);
-//    EditText tv_event_number = (EditText)findViewById(R.id.tv_event_number);
+    TextView tv_generate = new TextView(this);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,32 +47,44 @@ public class MainPageActivity extends AppCompatActivity {
         disposables = new CompositeDisposable();
         dao = AppDatabase.getDatabase(this).getLottoDao();
 
+
+        //생성하기 버튼
         Button join_button = findViewById(R.id.bt_generate);
         join_button.setOnClickListener(v -> {
             View view = findViewById(R.id.v_result);
             view.setVisibility(View.VISIBLE);
+            showToast();
+            tv_generate.findViewById(R.id.tv_lotto);
 
         });
 
+
+        //결과보기 버튼
         Button result_bt = findViewById(R.id.bt_match);
         result_bt.setOnClickListener(v -> {
-//            tv.setText();
-//            String 당첨번호 = generateLotto();
-//            tv.setText(당첨번호);
+//            generate_num = generate_number();
+//            .setText(generate_num);
+            callAPIs();
         });
 
+
+        //히스토리 버튼
         Button history_button = findViewById(R.id.bt_history);
         history_button.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), HistoryActivity.class);
             startActivity(intent);
         });
 
+
+        //트렌드 버튼
         Button trend_button = findViewById(R.id.bt_trend);
         trend_button.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), TrendActivity.class);
             startActivity(intent);
         });
 
+
+        //생성하기 버튼 리스너 속성 추가
         TextView editText = findViewById(R.id.tv_event_number);
         editText.addTextChangedListener(new TextWatcher() {
 
@@ -86,10 +102,10 @@ public class MainPageActivity extends AppCompatActivity {
 
                 // 입력이 끝났을 때
                 String text = s.toString();
-                if (text.length() != 0 ){
-                    join_button.setEnabled(true); //만약에 작성중일땐 버튼이보이도록하고
-                }else{
-                    join_button.setEnabled(false); //글자가 아무것도없다면 버튼이 안보이도록 합니다.
+                if (text.length() != 0) {
+                    join_button.setEnabled(true); //버튼 활성화
+                } else {
+                    join_button.setEnabled(false); //버튼 비활성화
                 }
             }
 
@@ -107,18 +123,63 @@ public class MainPageActivity extends AppCompatActivity {
 
     }
 
-    void showToast(String message){
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    void showToast(){
+         Toast.makeText(this.getApplicationContext(), R.string.generate_num, Toast.LENGTH_LONG).show();
     }
 
 
+    //로또 번호 생성
+    Object generate_number(){
 
-//    String generateLotto(){
-//
-//    }
+        List<Integer> result = new ArrayList<Integer>();
+        List<Integer> list = new ArrayList<Integer>();
+
+        // List 안에 로또번호 추가
+        for (int i = 1; i <= 45; i++) {
+            list.add(i);
+        }
+
+        for (int i = 0; i < 6; i++) {
+            final int idx = new Random().nextInt(list.size());
+            result.set(i, list.get(i));
+            result.add(list.get(idx));
+            list.remove(idx);
+        }
+
+        // 정렬
+        Arrays.sort(new List[]{list});
+
+        final int idx = new Random().nextInt(list.size());
+
+        result.add(list.get(idx));
+        list.remove(idx);
+
+        final String s = Arrays.toString(new List[]{list});
+        return s;
+
+    }
+
+
+    //Single패턴 DB조회하기
+    void Winning_number(){
+
+         disposables.add(AppDatabase.getDatabase(this).getLottoDao().findLotto(1)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<Lotto>() {
+                    @Override
+                    public void onSuccess(Lotto lotto) {
+                        Log.e("Lottonum", "number" + lotto.drwNo + "," + lotto.bnusNo);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+                }));
+    }
 
     void getLotto() {
-
 
         disposables.add(AppDatabase.getDatabase(this).getLottoDao().findLotto(3)
                 //getLotto(1)
@@ -128,8 +189,6 @@ public class MainPageActivity extends AppCompatActivity {
 
                     @Override
                     public void onSuccess(Lotto lotto) {
-
-                        Log.e("LottoDBJoin", "DbJoin" + lotto.drwNo + "," + lotto.drwtNo1 + "," + lotto.drwtNo2 + "," + lotto.drwtNo3 + "," + lotto.drwtNo4 + "," + lotto.drwtNo5 + "," + lotto.drwtNo6 + "," + lotto.drwNoDate);
 
                     }
 

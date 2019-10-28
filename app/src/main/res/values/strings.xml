@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
     <string name="app_name">Lotto App</string>
 
     <string name="downloading_lotto_data">Downloading Lotto data</string>
@@ -23,14 +23,15 @@
     <string name="welcome_message">시작하기</string>
 
     <!-- Main -->
-    <string name="event_number">로또 회차 조회</string>
-    <string name="generate_lotto">조회하기</string>
+    <string name="event_number">번호를 입력해주세요.</string>
+    <string name="generate_lotto">번호생성</string>
     <string name="generated_loto">Your Lotto</string>
     <string name="result">Result</string>
     <string name="button_history">History</string>
     <string name="button_trend">Trend</string>
 
     <!-- Popup -->
+    <string name="generate_num">"번호가 생성되었습니다."</string>
     <string name="title_win">Congratulations!</string>
     <string name="title_lose">Unlucky!</string>
     <string name="message_win">Your ranking is %d</string>
