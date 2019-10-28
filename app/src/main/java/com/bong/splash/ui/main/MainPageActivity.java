@@ -34,8 +34,8 @@ public class MainPageActivity extends AppCompatActivity {
 
     protected CompositeDisposable disposables;
     LottoDao dao;
-    TextView tv = new TextView(this);
-    EditText tv_event_number = (EditText)findViewById(R.id.tv_event_number);
+//    TextView tv = new TextView(this);
+//    EditText tv_event_number = (EditText)findViewById(R.id.tv_event_number);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,28 +69,28 @@ public class MainPageActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        tv_event_number.addTextChangedListener(new TextWatcher() {
+        TextView editText = findViewById(R.id.tv_event_number);
+        editText.addTextChangedListener(new TextWatcher() {
 
             @Override
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                String text = s.toString();
                 // 입력되는 텍스트에 변화가 있을 때
-                if (text.length() != 0 ){
-                    join_button.setVisibility(View.VISIBLE); //만약에 작성중일땐 버튼이보이도록하고
-                }else{
-                    join_button.setVisibility(View.GONE); //글자가 아무것도없다면 버튼이 안보이도록 합니다.
-                }
             }
 
 
             @Override
 
-            public void afterTextChanged(Editable arg0) {
+            public void afterTextChanged(Editable s) {
 
                 // 입력이 끝났을 때
-
+                String text = s.toString();
+                if (text.length() != 0 ){
+                    join_button.setEnabled(true); //만약에 작성중일땐 버튼이보이도록하고
+                }else{
+                    join_button.setEnabled(false); //글자가 아무것도없다면 버튼이 안보이도록 합니다.
+                }
             }
 
 

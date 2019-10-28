@@ -68,6 +68,7 @@
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/bt_generate"
                         style="@style/NextButtonDefault"
+                        android:enabled="false"
                         android:text="@string/generate_lotto"
                         app:cornerRadius="3dp"
                         app:layout_constraintBottom_toBottomOf="parent"
