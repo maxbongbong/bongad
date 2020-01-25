@@ -13,10 +13,13 @@ import com.bong.splash.room.LottoDao;
 import com.bong.splash.ui.welcome.WelcomePageActivity;
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subscribers.DisposableSubscriber;
@@ -38,40 +41,40 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     void getLottosAndSave() {
-        Log.e("SplashBong", "LottoThread: " + Thread.currentThread().getName());
+//        Log.e("SplashBong", "LottoThread: " + Thread.currentThread().getName());
 
         /**
          * 1. 로또 데이터 받아오기 : Retrofit
          * 2. 받아온 데이터 저장하기 : Room
          * 3. 1-50
          */
-        /*disposables.add(
-                Single.just(getString(R.string.welcome))
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribeWith(new DisposableSingleObserver<String>() {
-                            @Override
-                            public void onSuccess(String message) {
-                                Log.e("SplashBong","LottoThread: " + Thread.currentThread().getName());
-                                WelcomePageActivity.launch(SplashActivity.this, message);
-                                SplashActivity.this.finish(); // 로딩페이지 Activity stack에서 제거
-                            }
+//        disposables.add(
+//                Single.just(getString(R.string.welcome_title))
+//                        .subscribeOn(Schedulers.io())
+//                        .observeOn(AndroidSchedulers.mainThread())
+//                        .subscribeWith(new DisposableSingleObserver<String>() {
+//                            @Override
+//                            public void onSuccess(String message) {
+//                                Log.e("SplashBong","LottoThread: " + Thread.currentThread().getName());
+//                                WelcomePageActivity.launch(SplashActivity.this, message);
+//                                SplashActivity.this.finish(); // 로딩페이지 Activity stack에서 제거
+//                            }
+//
+//                            @Override
+//                            public void onError(Throwable e) {
+//                                Log.e("SplashBong","LottoThread: " + Thread.currentThread().getName());
+//                            }
+//                        })
+//        );
 
-                            @Override
-                            public void onError(Throwable e) {
-                                Log.e("SplashBong","LottoThread: " + Thread.currentThread().getName());
-                            }
-                        })
-        );
 
 
 
-*/
 
         Apiservice apiService = new RetrofitMaker().createService(this, Apiservice.class);
 
         // 복수개 통신
-        ArrayList<Single<Lotto>> list = new ArrayList<>();
+        ArrayList<Single<Lotto>> list = new ArrayList<Single<Lotto>>();
         for (int i = 1; i <= 50; i++) {
             list.add(
                     apiService.getCommentRx(i)   //서버통신
@@ -109,61 +112,61 @@ public class SplashActivity extends AppCompatActivity {
                 }));
 
         //클래스 따로 빼서 사용하는 법
-        /*AutoSave autoSave = new AutoSave();
-        disposables.add(autoSave.getLottoAndSave(this, 1, 50)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSubscriber<Lotto>() {
-                    @Override
-                    public void onNext(Lotto lotto) {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable t) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        WelcomePageActivity.launch(SplashActivity.this, getString(R.string.welcome));
-                        SplashActivity.this.finish(); // 로딩페이지 Activity stack에서 제거
-                    }
-                }));*/
-
-
-        //room에 lotto를 저장하기
-        /*disposables.add(saveLottoToRoomRx(Lotto())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableCompletableObserver() {
-                    @Override
-                    public void onComplete() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-                }));*/
-
-        //디비에서 가져오기
-//        disposables.add(AppDatabase.getDatabase(this).getLottoDao().findLotto(1)     //getLotto(1)
-//                .subscribeOn(Schedulers.io())
+//        AutoSave autoSave = new AutoSave();
+//        disposables.add(autoSave.getLottoAndSave(this, 1, 50)
 //                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribeWith(new DisposableSingleObserver<Lotto>() {
+//                .subscribeWith(new DisposableSubscriber<Lotto>() {
+//                    @Override
+//                    public void onNext(Lotto lotto) {
+//
+//                    }
 //
 //                    @Override
-//                    public void onSuccess(Lotto lotto) {
+//                    public void onError(Throwable t) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//                        WelcomePageActivity.launch(SplashActivity.this, getString(R.string.app_name));
+//                        SplashActivity.this.finish(); // 로딩페이지 Activity stack에서 제거
+//                    }
+//                }));
+
+
+//        room에 lotto를 저장하기
+//        disposables.add(saveLottoToRoomRx(Lotto())
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribeWith(new DisposableCompletableObserver() {
+//                    @Override
+//                    public void onComplete() {
 //
 //                    }
 //
 //                    @Override
 //                    public void onError(Throwable e) {
-//                        e.printStackTrace();
-//                    }
 //
+//                    }
 //                }));
+
+        //디비에서 가져오기
+        disposables.add(AppDatabase.getDatabase(this).getLottoDao().findLotto(20)     //getLotto(1)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<Lotto>() {
+
+                    @Override
+                    public void onSuccess(Lotto lotto) {
+                        Log.e("asdfa", "drwsdfd" + lotto);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                }));
     }
 
     //디비에서 가져오기
@@ -180,10 +183,10 @@ public class SplashActivity extends AppCompatActivity {
         return Single.just(list);
     }
 
-    //rxjava
+//    rxjava
 //    Completable saveLottoToRoomRx(Lotto lotto) {
-//        //여기에 로또 저장하기 넣기
-//
+        //여기에 로또 저장하기 넣기
+
 //        return Completable.complete();
 //    }
 
@@ -206,10 +209,6 @@ public class SplashActivity extends AppCompatActivity {
                     public void onSuccess(Lotto lotto) {
                         Log.e("SplashBong", "lotto: " + lotto.drwNo + "," + lotto.drwNoDate);
 
-
-                        efef
-                        efef
-                        ef
 
                     }
 

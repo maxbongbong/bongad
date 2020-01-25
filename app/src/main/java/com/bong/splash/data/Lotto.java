@@ -16,6 +16,7 @@ public class Lotto {
     public int drwtNo5;
     public int drwtNo6;
     public int bnusNo; //보너스번호
+
     public String drwNoDate; //날짜
     public String totSellamnt;
     public String returnValue;

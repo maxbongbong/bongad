@@ -23,7 +23,7 @@
     <string name="welcome_message">시작하기</string>
 
     <!-- Main -->
-    <string name="event_number">번호를 입력해주세요.</string>
+    <string name="event_number">회차 번호를 입력해주세요.</string>
     <string name="generate_lotto">번호생성</string>
     <string name="generated_loto">Your Lotto</string>
     <string name="result">Result</string>
@@ -51,4 +51,6 @@
     <string name="error_argument">Input data is not appropriate. Please check your input data and try again.</string>
     <string name="error_unknown">There is an error in connecting to the server. Please check this out.</string>
     <string name="logo">TODO</string>
+    <string name="test">Test</string>
+    <string name="auto_num">자동 추첨 번호</string>
 </resources>

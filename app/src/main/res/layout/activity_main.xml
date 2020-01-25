@@ -111,7 +111,7 @@
                         android:gravity="center_horizontal"
                         android:paddingTop="@dimen/spacing_large"
                         android:paddingBottom="@dimen/spacing_large"
-                        android:text="3, 5, 2, 49, 29, 1 + 24"
+                        android:text="@string/auto_num"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline" />
 
                     <RelativeLayout

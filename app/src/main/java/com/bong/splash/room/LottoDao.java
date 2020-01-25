@@ -33,12 +33,20 @@ public interface LottoDao {
     public void insertUsers(List<Lotto> list);
 
     //DESC  높은숫자부터 정렬
-    //ASC   낮은숫자부터 정렬 1~
+    //ASC   낮은숫자부터 정렬
     @Query("SELECT * FROM Lotto ORDER BY drwNo DESC")
-    List<Lotto> loadAllLottos();
+    Single<Lotto> loadAllLottos();
 
     @Query("SELECT * FROM Lotto WHERE drwNo = :drwNo")
     Single<Lotto> findLotto(int drwNo);
+
+    //##########
+    //Frequency
+    //##########
+
+//    @Query("SELECT * FROM Frequency WHERE drwNo = :drwNo")
+//    Single<Lotto> WinLotto(int drwNo);
+
 
 //    @Query("SELECT * FROM Lotto WHERE drwNo = :drwNo")
 //    fun getUserById(id: String): Single<Lotto>
