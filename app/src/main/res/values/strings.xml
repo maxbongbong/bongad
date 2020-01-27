@@ -53,4 +53,5 @@
     <string name="logo">TODO</string>
     <string name="test">Test</string>
     <string name="auto_num">자동 추첨 번호</string>
+    <string name="hello_history">Hello history!</string>
 </resources>

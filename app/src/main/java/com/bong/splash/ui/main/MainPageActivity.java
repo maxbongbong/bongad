@@ -65,11 +65,8 @@ public class MainPageActivity extends AppCompatActivity {
         generate_button.setOnClickListener(v -> {
             View view = findViewById(R.id.v_result);
             view.setVisibility(View.VISIBLE);
-            List<Integer>result = new ArrayList<>();
             showToast();
             getLottoTicket();
-//            String s = generateNum() + "";
-//            tv_generate.setText(s);
             tv_generate.setText(convertIntoString(Result));
 
             //EditText값 가져오기
@@ -260,7 +257,7 @@ public class MainPageActivity extends AppCompatActivity {
     }
 
     //Single패턴 DB조회하기
-    void Winning_number() {
+//    void Winning_number() {
 
 //         disposables.add(AppDatabase.getDatabase(this).getLottoDao().Frequency(1)
 //                .subscribeOn(Schedulers.io())
@@ -277,7 +274,7 @@ public class MainPageActivity extends AppCompatActivity {
 //                    }
 //
 //                }));
-    }
+//    }
 
     void getLotto() {
         int num = Integer.parseInt(tv_result.getText().toString());
@@ -295,11 +292,9 @@ public class MainPageActivity extends AppCompatActivity {
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
-
                     }
 
                 }));
-
     }
 
 
