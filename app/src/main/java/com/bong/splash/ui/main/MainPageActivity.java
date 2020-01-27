@@ -335,7 +335,6 @@ public class MainPageActivity extends AppCompatActivity {
                     for (int n = 0; n < temp.size(); n++) {
                         Log.e("asd", "temp = " + temp.get(n));
                     }
-
                     //todo: 받아온정보를 내가가진 로또번호와 비교 -> 몇등?
                     //todo: 등수를 팝업으로 표시
                     show(temp);
