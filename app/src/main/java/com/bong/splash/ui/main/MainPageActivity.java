@@ -174,16 +174,14 @@ public class MainPageActivity extends AppCompatActivity {
             for(int j = 0; j <= 6; j++){
                 if (Result.get(j) == Win.get(i)) {
                     cnt++;
-                    Log.e("ads", "cnt = " + cnt + " Result = " + Result.get(j));
+                    for(int k = 0; k <= 6; k++){
+                        if (cnt == 5 && Result.get(k) == Win.get(6)) {
+                            bns = 1;
+                        }
+                    }
                 }
             }
         }
-        for(int i = 0; i <= 6; i++){
-            if (cnt == 5 && Result.get(i) == Win.get(6)) {
-                bns = 1;
-            }
-        }
-
 
         if (cnt == 3) {
             str = "3개 맞았습니다. 5등!";
