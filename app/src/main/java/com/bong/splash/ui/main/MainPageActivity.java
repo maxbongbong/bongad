@@ -48,7 +48,6 @@ public class MainPageActivity extends AppCompatActivity {
     LottoDao dao;
     TextView tv_generate;
     EditText tv_result;
-    List<Integer> WinNum;
     List<Integer> Result;
 
     @Override
@@ -88,9 +87,7 @@ public class MainPageActivity extends AppCompatActivity {
         //결과보기 버튼
         Button result_bt = findViewById(R.id.bt_match);
         result_bt.setOnClickListener(v -> {
-            fuck(WinNum);
-            show(WinNum);
-
+            callAPIs();
         });
 
 
@@ -148,27 +145,14 @@ public class MainPageActivity extends AppCompatActivity {
     }
 
     //결과보기-팝업창
-    void show(List<Integer>change){
+    void show(List<Integer> Win){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("결과보기");
-        fuck(WinNum);
-        List<Integer>aaa = new ArrayList<>();
-        aaa = WinNum;
 
         String str = convertIntoString(Result);
-        for(int i = 0; i < fuck(WinNum).size(); i++){
-            if(fuck(WinNum).size() == 0){
-                Log.e("asd", "fuckadskjfasdkjfksdfn");
-            }else{
-                Log.e("fffff", "WinNum = " + WinNum.get(i));
-            }
-        }
-//        String str2 = convertIntoString(list());
-
-        String str2 = convertIntoString(WinNum);
-
+        String str1 = convertIntoString(Win);
         String drwNo = tv_result.getText().toString();
-        builder.setMessage("나의 번호 = [" + str + "]\n" + drwNo + "회번호 = " + str2 + "\n" + "");
+        builder.setMessage("나의 번호 = [" + str + "]\n" + drwNo + "회번호 = [" + str1 + "]\n" + LottoRank(Win));
         builder.setPositiveButton("읽음",
                 new DialogInterface.OnClickListener() {
                     @Override
@@ -185,15 +169,15 @@ public class MainPageActivity extends AppCompatActivity {
         builder.show();
     }
     //로또 등수확인
-    private String LottoRank(List<Integer>rannum, List<Integer>winnum){
+    public String LottoRank(List<Integer> Win) {
         int cnt = 0;
         int j = 0;
         int bns = 0;
         String str;
-        for(int i = 0; i < 5; i++){
-            if(rannum.get(j) == winnum.get(i)){
+        for (int i = 0; i < 5; i++) {
+            if (Result.get(j) == Win.get(i)) {
                 cnt++;
-                if (cnt == 5 && winnum.get(i) == rannum.get(6) && rannum.get(6) == winnum.get(6)) {
+                if (cnt == 5 && Win.get(i) == Result.get(6) && Result.get(6) == Win.get(6)) {
                     bns = 1;
                 }
                 j += 1;
@@ -209,7 +193,11 @@ public class MainPageActivity extends AppCompatActivity {
             str = "5개 + 보너스!! 2등!.";
         } else if (cnt == 6) {
             str = "6개 맞았습니다. 1등!츄카포카";
-        } else {
+        } else if (cnt == 1) {
+            str = "1개 맞았습니다 - 꽝 -";
+        } else if (cnt == 2) {
+            str = "2개 맞았습니다 - 꽝 -";
+        }else {
             str = "꽝꽝꽝꽝꽝꽝";
         }
         return str;
@@ -248,42 +236,6 @@ public class MainPageActivity extends AppCompatActivity {
         generateWinnumbers = Result;
     }
 
-//    private Object generateNum() {
-//        Object generateWinnumbers = new Object();
-//
-//        List<Integer> result = new ArrayList<Integer>();//result에 arraylist 초기화
-//        List<Integer> list = new ArrayList<Integer>();  //list에 arraylist 초기화
-//
-//        // List 안에 1 ~ 45번 까지 로또번호 추가
-//        for (int i = 1; i <= 45; i++) {
-//            list.add(i);
-//        }
-//
-//        // Result 안에 1 ~ 6번 까지 로또번호 랜덤 추가
-//        for (int i = 0; i < 6; i++) {
-//            final int idx = new Random().nextInt(list.size());
-//            result.add(list.get(idx));
-//            list.remove(idx);
-//        }
-
-//        List<Integer> result = new ArrayList<Integer>();//result에 arraylist 초기화
-//        if (result.size() > 0) {
-//            Log.e("asdf", "generateNum: " + result.get(result.size() - 1));
-//        }
-
-        // 정렬
-//        Collections.sort(result);//오름차순
-//        //Collections.reverse(list);//내림차순
-//
-//        final int idx = new Random().nextInt(list.size());
-//        result.add(list.get(idx));
-//        list.remove(idx);
-//
-//        for(int i = 0; i < 6; i++){
-//            Log.e("asdf", "for generateNum: " + result.get(i));
-//        }
-//        return result;
-//    }
     //String 형식으로 형변환
     private String convertIntoString(List<Integer> change) {
         StringBuilder sb = new StringBuilder();
@@ -358,45 +310,6 @@ public class MainPageActivity extends AppCompatActivity {
         return Single.just(list);
     }
 
-    public List<Integer>fuck (List<Integer> adf){
-        int i = Integer.parseInt(tv_result.getText().toString());
-        Apiservice apiService = new RetrofitMaker().createService(this, Apiservice.class);
-        Call<Lotto> commentStr = apiService.getComment(i);
-        List<Integer> temp = new ArrayList<>();
-        WinNum = new ArrayList<>();
-        commentStr.enqueue(new Callback<Lotto>() {
-            @Override
-            public void onResponse(Call<Lotto> call, Response<Lotto> response) {
-                boolean isSuccessful = response.isSuccessful();
-                if (isSuccessful) {
-                    Log.v("Test3", "isSuccessful:" + isSuccessful);
-                    Lotto lotto = response.body();
-                    WinNum = new ArrayList<>();
-                    temp.add(lotto.drwtNo1);
-                    temp.add(lotto.drwtNo2);
-                    temp.add(lotto.drwtNo3);
-                    temp.add(lotto.drwtNo4);
-                    temp.add(lotto.drwtNo5);
-                    temp.add(lotto.drwtNo6);
-                    temp.add(lotto.bnusNo);
-                    // Result 안에 1 ~ 6번 까지 로또번호 랜덤 추가
-                    for (int i = 0; i < temp.size(); i++) {
-                        WinNum.add(temp.get(i));
-                    }
-                }
-            }
-            @Override
-            public void onFailure(Call<Lotto> call, Throwable t) {
-            }
-        });
-        return WinNum;
-    }
-
-
-    public interface WinNumber{
-        void onSuccess(List<Integer>temp);
-    }
-
     void callAPIs() {
 
         int i = Integer.parseInt(tv_result.getText().toString());
@@ -410,7 +323,6 @@ public class MainPageActivity extends AppCompatActivity {
                 if (isSuccessful) {
                     Log.v("Test3", "isSuccessful:" + isSuccessful);
                     Lotto lotto = response.body();
-                    WinNum = new ArrayList<>();
                     this.temp = new ArrayList<>();
                     temp.add(lotto.drwtNo1);
                     temp.add(lotto.drwtNo2);
@@ -420,23 +332,13 @@ public class MainPageActivity extends AppCompatActivity {
                     temp.add(lotto.drwtNo6);
                     temp.add(lotto.bnusNo);
                     // Result 안에 1 ~ 6번 까지 로또번호 랜덤 추가
-                    for (int i = 0; i < temp.size(); i++) {
-                        WinNum.add(temp.get(i));
-                    }
                     for (int n = 0; n < temp.size(); n++) {
-//                        if (WinNum == null) {
-//                            Log.e("asd", "빈깡통");
-//                        }else{
-//                            Log.e("asd", "WinNum = " + WinNum.get(n));
-//                        }
-
-
                         Log.e("asd", "temp = " + temp.get(n));
-                        Log.e("sas", "WinNum = " + WinNum.get(n));
                     }
 
                     //todo: 받아온정보를 내가가진 로또번호와 비교 -> 몇등?
                     //todo: 등수를 팝업으로 표시
+                    show(temp);
                 }
             }
             @Override
