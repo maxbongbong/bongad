@@ -83,13 +83,11 @@ public class MainPageActivity extends AppCompatActivity {
 
         });
 
-
         //결과보기 버튼
         Button result_bt = findViewById(R.id.bt_match);
         result_bt.setOnClickListener(v -> {
             callAPIs();
         });
-
 
         //히스토리 버튼
         Button history_button = findViewById(R.id.bt_history);
@@ -98,14 +96,12 @@ public class MainPageActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-
         //트렌드 버튼
         Button trend_button = findViewById(R.id.bt_trend);
         trend_button.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), TrendActivity.class);
             startActivity(intent);
         });
-
 
         //생성하기 버튼 리스너 속성 추가
         TextView editText = findViewById(R.id.tv_event_number);
@@ -171,23 +167,29 @@ public class MainPageActivity extends AppCompatActivity {
     //로또 등수확인
     public String LottoRank(List<Integer> Win) {
         int cnt = 0;
-        int j = 0;
         int bns = 0;
         String str;
-        for (int i = 0; i < 5; i++) {
-            if (Result.get(j) == Win.get(i)) {
-                cnt++;
-                if (cnt == 5 && Win.get(i) == Result.get(6) && Result.get(6) == Win.get(6)) {
-                    bns = 1;
+
+        for (int i = 0; i <= 5; i++) {
+            for(int j = 0; j <= 6; j++){
+                if (Result.get(j) == Win.get(i)) {
+                    cnt++;
+                    Log.e("ads", "cnt = " + cnt + " Result = " + Result.get(j));
                 }
-                j += 1;
             }
         }
+        for(int i = 0; i <= 6; i++){
+            if (cnt == 5 && Result.get(i) == Win.get(6)) {
+                bns = 1;
+            }
+        }
+
+
         if (cnt == 3) {
             str = "3개 맞았습니다. 5등!";
         } else if (cnt == 4) {
             str = "4개 맞았습니다. 4등!";
-        } else if (cnt == 5) {
+        } else if (cnt == 5 && bns == 0) {
             str = "5개 맞았습니다. 3등!";
         } else if (cnt == 5 && bns == 1) {
             str = "5개 + 보너스!! 2등!.";
@@ -197,7 +199,7 @@ public class MainPageActivity extends AppCompatActivity {
             str = "1개 맞았습니다 - 꽝 -";
         } else if (cnt == 2) {
             str = "2개 맞았습니다 - 꽝 -";
-        }else {
+        } else {
             str = "꽝꽝꽝꽝꽝꽝";
         }
         return str;
@@ -205,7 +207,7 @@ public class MainPageActivity extends AppCompatActivity {
 
     //로또 번호 생성
     public void getLottoTicket() {
-        Object generateWinnumbers = new Object();
+
         Result = new ArrayList<>();//Result에 arraylist 초기화
         List<Integer> list = new ArrayList<Integer>();  //list에 arraylist 초기화
 
@@ -215,25 +217,32 @@ public class MainPageActivity extends AppCompatActivity {
         }
 
         // Result 안에 1 ~ 6번 까지 로또번호 랜덤 추가
-        for (int i = 0; i < 6; i++) {
-            final int idx = new Random().nextInt(list.size());
-            Result.add(list.get(idx));
-            list.remove(idx);
-        }
+//        for (int i = 0; i < 6; i++) {
+//            final int idx = new Random().nextInt(list.size());
+//            Result.add(list.get(idx));
+//            list.remove(idx);
+//        }
+
+        //2, 4, 21, 26, 43, 44, 16
+        Result.add(2);
+        Result.add(4);
+        Result.add(21);
+        Result.add(26);
+        Result.add(43);
+        Result.add(1);
+        Result.add(16);
 
         // 정렬
         Collections.sort(Result);//오름차순
         //Collections.reverse(list);//내림차순
 
         final int idx = new Random().nextInt(list.size());
-        Result.add(list.get(idx));
+//        Result.add(list.get(idx));
         list.remove(idx);
-
 
         for(int i = 0; i < Result.size(); i++){
             Log.e("asdf", "Result = " + Result.get(i));
         }
-        generateWinnumbers = Result;
     }
 
     //String 형식으로 형변환
