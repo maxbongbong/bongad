@@ -1,4 +1,5 @@
 package com.bong.splash.ui.main;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import com.bong.splash.R;
@@ -21,7 +21,6 @@ import com.bong.splash.room.AppDatabase;
 import com.bong.splash.room.LottoDao;
 import com.bong.splash.ui.history.HistoryActivity;
 import com.bong.splash.ui.trend.TrendActivity;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -166,15 +165,14 @@ public class MainPageActivity extends AppCompatActivity {
         int cnt = 0;
         int bns = 0;
         String str;
-
-        for (int i = 0; i <= 5; i++) {
-            for(int j = 0; j <= 6; j++){
-                if (Result.get(j) == Win.get(i)) {
+//        25회 당첨 번호 = 2, 4, 21, 26, 43, 44 + 16
+//        내 랜덤 생성번호= 43, 21, 16, 44, 26, 4 + 1
+        for(int i = 0; i < 7; i++){
+            for(int j = 0; j < 7; j++){
+                if (Result.get(j) == Win.get(i) ) {
                     cnt++;
-                    for(int k = 0; k <= 6; k++){
-                        if (cnt == 5 && Result.get(k) == Win.get(6)) {
-                            bns = 1;
-                        }
+                    if(cnt == 5 && Result.get(j) == Win.get(6)){
+                        bns = 1;
                     }
                 }
             }
@@ -212,27 +210,27 @@ public class MainPageActivity extends AppCompatActivity {
         }
 
         // Result 안에 1 ~ 6번 까지 로또번호 랜덤 추가
-//        for (int i = 0; i < 6; i++) {
-//            final int idx = new Random().nextInt(list.size());
-//            Result.add(list.get(idx));
-//            list.remove(idx);
-//        }
+        for (int i = 0; i < 6; i++) {
+            final int idx = new Random().nextInt(list.size());
+            Result.add(list.get(idx));
+            list.remove(idx);
+        }
 
-        //2, 4, 21, 26, 43, 44, 16
-        Result.add(2);
-        Result.add(4);
-        Result.add(21);
-        Result.add(26);
-        Result.add(43);
-        Result.add(1);
-        Result.add(16);
+//        25회 당첨 번호 = 2, 4, 21, 26, 43, 44 + 16
+//        Result.add(2);
+//        Result.add(4);
+//        Result.add(21);
+//        Result.add(26);
+//        Result.add(43);
+//        Result.add(1);
+//        Result.add(16);
 
         // 정렬
         Collections.sort(Result);//오름차순
         //Collections.reverse(list);//내림차순
 
         final int idx = new Random().nextInt(list.size());
-//        Result.add(list.get(idx));
+        Result.add(list.get(idx));
         list.remove(idx);
 
         for(int i = 0; i < Result.size(); i++){
@@ -276,41 +274,41 @@ public class MainPageActivity extends AppCompatActivity {
 //                }));
 //    }
 
-    void getLotto() {
-        int num = Integer.parseInt(tv_result.getText().toString());
-        disposables.add(AppDatabase.getDatabase(this).getLottoDao().findLotto(num)
-                //getLotto(1)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSingleObserver<Lotto>() {
-
-                    @Override
-                    public void onSuccess(Lotto lotto) {
-                        lotto.getClass();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        e.printStackTrace();
-                    }
-
-                }));
-    }
+//    void getLotto() {
+//        int num = Integer.parseInt(tv_result.getText().toString());
+//        disposables.add(AppDatabase.getDatabase(this).getLottoDao().findLotto(num)
+//                //getLotto(1)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribeWith(new DisposableSingleObserver<Lotto>() {
+//
+//                    @Override
+//                    public void onSuccess(Lotto lotto) {
+//                        lotto.getClass();
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                }));
+//    }
 
 
     //디비에서 가져오기
-    Single<Lotto> getLotto(int lottoNo) {
-        //여기에 로또 저장하기 넣기
-        //return Single.just(new Lotto());
-        return dao.findLotto(lottoNo);
-    }
-
-    Single<List<Lotto>> getLottos(int lottoNo) {
-        //여기에 로또 저장하기 넣기
-        ArrayList<Lotto> list = new ArrayList<>();
-        list.add(new Lotto());
-        return Single.just(list);
-    }
+//    Single<Lotto> getLotto(int lottoNo) {
+//        //여기에 로또 저장하기 넣기
+//        //return Single.just(new Lotto());
+//        return dao.findLotto(lottoNo);
+//    }
+//
+//    Single<List<Lotto>> getLottos(int lottoNo) {
+//        //여기에 로또 저장하기 넣기
+//        ArrayList<Lotto> list = new ArrayList<>();
+//        list.add(new Lotto());
+//        return Single.just(list);
+//    }
 
     void callAPIs() {
 

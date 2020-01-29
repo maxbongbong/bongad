@@ -13,7 +13,6 @@ import com.bong.splash.room.LottoDao;
 import com.bong.splash.ui.welcome.WelcomePageActivity;
 import java.util.ArrayList;
 import java.util.List;
-
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
@@ -66,8 +65,6 @@ public class SplashActivity extends AppCompatActivity {
 //                            }
 //                        })
 //        );
-
-
 
 
 
@@ -176,12 +173,12 @@ public class SplashActivity extends AppCompatActivity {
 //        return dao.findLotto(lottoNo);
 //    }
 
-    Single<List<Lotto>> getLottos(int lottoNo) {
-        //여기에 로또 저장하기 넣기
-        ArrayList<Lotto> list = new ArrayList<>();
-        list.add(new Lotto());
-        return Single.just(list);
-    }
+//    Single<List<Lotto>> getLottos(int lottoNo) {
+//        //여기에 로또 저장하기 넣기
+//        ArrayList<Lotto> list = new ArrayList<>();
+//        list.add(new Lotto());
+//        return Single.just(list);
+//    }
 
 //    rxjava
 //    Completable saveLottoToRoomRx(Lotto lotto) {
@@ -220,31 +217,31 @@ public class SplashActivity extends AppCompatActivity {
     }*/
 
 
-    class AutoSave {
-        Flowable<Lotto> getLottoAndSave(Context context, int start, int end) {
-            Apiservice apiService = new RetrofitMaker().createService(context, Apiservice.class);
-
-            // 복수개 통신
-            ArrayList<Single<Lotto>> list = new ArrayList<>();
-            for (int i = 1; i <= 50; i++) {
-                list.add(
-                        apiService.getCommentRx(i)
-                                .subscribeOn(Schedulers.io())
-                                //.map()//return 객체
-                                //.flatMap()//single
-                                .map(lotto -> {
-                                    Log.e("SplashBong", "lotto 서버통신: " + lotto.drwNo + "," + lotto.drwNoDate);
-                                    saveLottoToRoom(lotto);
-                                    return lotto;
-                                })
-
-
-                );
-            }
-
-            return Single.concat(list);
-        }
-    }
+//    class AutoSave {
+//        Flowable<Lotto> getLottoAndSave(Context context, int start, int end) {
+//            Apiservice apiService = new RetrofitMaker().createService(context, Apiservice.class);
+//
+//            // 복수개 통신
+//            ArrayList<Single<Lotto>> list = new ArrayList<>();
+//            for (int i = 1; i <= 50; i++) {
+//                list.add(
+//                        apiService.getCommentRx(i)
+//                                .subscribeOn(Schedulers.io())
+//                                //.map()//return 객체
+//                                //.flatMap()//single
+//                                .map(lotto -> {
+//                                    Log.e("SplashBong", "lotto 서버통신: " + lotto.drwNo + "," + lotto.drwNoDate);
+//                                    saveLottoToRoom(lotto);
+//                                    return lotto;
+//                                })
+//
+//
+//                );
+//            }
+//
+//            return Single.concat(list);
+//        }
+//    }
 
     @Override
     protected void onDestroy() {
