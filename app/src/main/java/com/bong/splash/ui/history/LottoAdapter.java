@@ -23,7 +23,6 @@ public class LottoAdapter extends BaseAdapter {
         cnt = m_oData.size();
     }
 
-
     @Override
     public int getCount() {
         return cnt;

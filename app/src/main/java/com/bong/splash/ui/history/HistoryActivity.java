@@ -171,7 +171,6 @@ public class HistoryActivity extends AppCompatActivity {
                         DrwNum.add(lotto.drwNo + 1);
                         Collections.reverse(DrwNum);
 
-
                         // WinNum안에 로또추첨 번호 추가
                         this.Winnum = new ArrayList<>();
                         Winnum.add(lotto.drwtNo1);
@@ -188,15 +187,24 @@ public class HistoryActivity extends AppCompatActivity {
                         for(int i = 0; i < DrwNum.size(); i++) {
                             Log.e("asd", "DrwNo = " + DrwNum.get(i));
                         }
+                        List<String>list = new ArrayList<>();
+                        list.add(convertIntoString(Winnum));
+
+                        Log.e("asd", "list = " + list.get(0));
+                        String [] str = new String[50];
+                        for(int k =0; k < str.length; k++){
+                            str[k] = list.get(0);
+                        }
 
 //                        String[] str = {"123", "123", "123", "123", "123", "123", "123","123", "123",};
+
                         int cnt = 0;
                         ArrayList<LottoNum> Data = new ArrayList<>();
                         for(int i = 0; i < 50; i++){
                             LottoNum item = new LottoNum();
                             item.LottoNum = "" + (i+1);
 
-                            item.WinNum = convertIntoString(Winnum);
+                            item.WinNum = str[cnt++];
                             Data.add(item);
                             if(cnt >= Winnum.size()) cnt = 0;
                         }
@@ -213,7 +221,6 @@ public class HistoryActivity extends AppCompatActivity {
                 }
             });
         }
-
     }
 }
 
