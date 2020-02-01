@@ -14,7 +14,7 @@ public class LottoA extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(android.R.layout.recycleview);
+        setContentView(android.R.layout.);
         setTitle("로또");
 
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.recycle_view)
