@@ -18,7 +18,9 @@
             android:gravity="center"
             android:text="1"
             android:textSize="30sp"
-            tools:ignore="MissingConstraints"></TextView>
+            tools:ignore="MissingConstraints"
+            >
+        </TextView>
 
         <TextView
             android:id="@+id/WinNum"
@@ -31,5 +33,5 @@
             >
         </TextView>
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
+

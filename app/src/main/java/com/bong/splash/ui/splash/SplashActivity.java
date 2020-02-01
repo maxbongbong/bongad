@@ -132,7 +132,7 @@ public class SplashActivity extends AppCompatActivity {
 
 
 //        room에 lotto를 저장하기
-//        disposables.add(saveLottoToRoomRx(Lotto())
+//        disposables.add(saveLottoToRoomRx(new Lotto())
 //                .subscribeOn(Schedulers.io())
 //                .observeOn(AndroidSchedulers.mainThread())
 //                .subscribeWith(new DisposableCompletableObserver() {
@@ -148,14 +148,13 @@ public class SplashActivity extends AppCompatActivity {
 //                }));
 
         //디비에서 가져오기
-        disposables.add(AppDatabase.getDatabase(this).getLottoDao().findLotto(20)     //getLotto(1)
+        disposables.add(AppDatabase.getDatabase(this).getLottoDao().findLotto(2)     //getLotto(1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<Lotto>() {
 
                     @Override
                     public void onSuccess(Lotto lotto) {
-                        Log.e("asdfa", "drwsdfd" + lotto);
                     }
 
                     @Override

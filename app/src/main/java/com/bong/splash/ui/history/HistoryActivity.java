@@ -65,7 +65,7 @@ public class HistoryActivity extends AppCompatActivity {
 //        data.add(new LottoView(8, 17));
 
         //adapter
-//        MyFirstAdapter adapter = new MyFirstAdapter(data);
+//        RecyclerViewAdapter adapter = new RecyclerViewAdapter(data);
 
         //adapter connection
 //        ListView listView = (ListView)findViewById(R.id.list_view);
@@ -81,7 +81,7 @@ public class HistoryActivity extends AppCompatActivity {
 //        }
 //
 //        //adapter
-//        MyFirstAdapter adapter = new MyFirstAdapter(data);
+//        RecyclerViewAdapter adapter = new RecyclerViewAdapter(data);
 //
 //        //adapter connection
 //        ListView listView = (ListView)findViewById(R.id.list_view);
@@ -155,7 +155,7 @@ public class HistoryActivity extends AppCompatActivity {
     void callAPIs() {
 
         Apiservice apiService = new RetrofitMaker().createService(this, Apiservice.class);
-        for(int i = 0; i <= 49; i ++) {
+        for(int i = 1; i <= 50; i ++) {
             Call<Lotto> commentStr = apiService.getComment(i);
             commentStr.enqueue(new Callback<Lotto>() {
                 private List<Integer> Winnum;
@@ -168,7 +168,7 @@ public class HistoryActivity extends AppCompatActivity {
                         Lotto lotto = response.body();
 
                         this.DrwNum = new ArrayList<>();
-                        DrwNum.add(lotto.drwNo + 1);
+                        DrwNum.add(lotto.drwNo);
                         Collections.reverse(DrwNum);
 
                         // WinNum안에 로또추첨 번호 추가
@@ -191,10 +191,6 @@ public class HistoryActivity extends AppCompatActivity {
                         list.add(convertIntoString(Winnum));
 
                         Log.e("asd", "list = " + list.get(0));
-                        String [] str = new String[50];
-                        for(int k =0; k < str.length; k++){
-                            str[k] = list.get(0);
-                        }
 
 //                        String[] str = {"123", "123", "123", "123", "123", "123", "123","123", "123",};
 
@@ -202,9 +198,10 @@ public class HistoryActivity extends AppCompatActivity {
                         ArrayList<LottoNum> Data = new ArrayList<>();
                         for(int i = 0; i < 50; i++){
                             LottoNum item = new LottoNum();
+                            String str = list.get(0);
                             item.LottoNum = "" + (i+1);
-
-                            item.WinNum = str[cnt++];
+                            item.WinNum = str;
+//                            item.WinNum = str[cnt++];
                             Data.add(item);
                             if(cnt >= Winnum.size()) cnt = 0;
                         }

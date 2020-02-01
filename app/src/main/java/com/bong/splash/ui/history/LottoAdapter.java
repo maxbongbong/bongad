@@ -13,7 +13,6 @@ import java.util.ArrayList;
 
 public class LottoAdapter extends BaseAdapter {
 
-
     LayoutInflater inflater = null;
     private ArrayList<LottoNum> m_oData = null;
     private int cnt = 0;
@@ -40,21 +39,24 @@ public class LottoAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null)
-        {
+
+        if (convertView == null) {
             final Context context = parent.getContext();
-            if (inflater == null)
-            {
+            if (inflater == null) {
                 inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             }
             convertView = inflater.inflate(R.layout.item_drwno, parent, false);
+
         }
+        LottoNum entry = m_oData.get(position);
+        if(entry != null){
 
-        TextView oTextTitle = (TextView) convertView.findViewById(R.id.Num);
-        TextView oTextDate = (TextView) convertView.findViewById(R.id.WinNum);
+        }
+        TextView TextTitle = (TextView) convertView.findViewById(R.id.Num);
+        TextView TextData = (TextView) convertView.findViewById(R.id.WinNum);
 
-        oTextTitle.setText(m_oData.get(position).LottoNum);
-        oTextDate.setText(m_oData.get(position).WinNum);
+        TextTitle.setText(m_oData.get(position).LottoNum);
+        TextData.setText(m_oData.get(position).WinNum);
         return convertView;
     }
 }
