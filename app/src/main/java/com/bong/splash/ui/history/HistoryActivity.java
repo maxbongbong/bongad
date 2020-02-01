@@ -1,6 +1,9 @@
 package com.bong.splash.ui.history;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ViewGroup;
@@ -14,6 +17,13 @@ import com.bong.splash.data.Lotto;
 import com.bong.splash.network.RetrofitMaker;
 import com.bong.splash.room.AppDatabase;
 import com.bong.splash.room.LottoDao;
+import com.google.gson.Gson;
+import com.google.gson.annotations.SerializedName;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -24,6 +34,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subscribers.DisposableSubscriber;
+import okhttp3.internal.Util;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -33,6 +44,10 @@ public class HistoryActivity extends AppCompatActivity {
     protected CompositeDisposable disposables;
     LottoDao dao;
     private ListView m_listView = null;
+    List<String>list;
+    private ListView listView;
+    private LottoAdapter adapter;
+//    private List<LottoNum> numList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +56,37 @@ public class HistoryActivity extends AppCompatActivity {
         disposables = new CompositeDisposable();
         dao = AppDatabase.getDatabase(this).getLottoDao();
 
-//        listView = (ListView) findViewById(R.id.list_view);
+        Intent intent = getIntent();
+        listView = (ListView)findViewById(R.id.list_view);
+//        numList = new ArrayList<LottoNum>();
+
+//        adapter = new LottoAdapter(getApplicationContext(),numList);
+//        listView.setAdapter(adapter);
+//        try{
+//            JSONObject jsonObject = new JSONObject(intent.getStringExtra("numlist"));
+//            JSONArray jsonArray = jsonObject.getJSONArray("response");
+//            int cnt = 0;
+//
+//            String Num, Win;
+//
+//            while (cnt < jsonArray.length()) {
+//                JSONObject object = jsonArray.getJSONObject(cnt);
+//
+//                Num = object.getString("Num");
+//                Win = object.getString("Win");
+//
+//                LottoNum lottoNum = new LottoNum(Num, Win);
+//                numList.add(lottoNum);
+//                cnt++;
+//            }
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
 
         callAPIs();
+//        for(int i = 0; i < 50; i++){
+//        }
+//        result();
 
 //        Win.add("asdasd");
 //        //adapter
@@ -152,14 +195,17 @@ public class HistoryActivity extends AppCompatActivity {
 //            dao.insertLotto(lotto);
 //    }
 
-    void callAPIs() {
+
+    public List<String> callAPIs() {
 
         Apiservice apiService = new RetrofitMaker().createService(this, Apiservice.class);
         for(int i = 1; i <= 50; i ++) {
             Call<Lotto> commentStr = apiService.getComment(i);
             commentStr.enqueue(new Callback<Lotto>() {
+
                 private List<Integer> Winnum;
                 private List<Integer> DrwNum;
+
                 @Override
                 public void onResponse(Call<Lotto> call, Response<Lotto> response) {
                     boolean isSuccessful = response.isSuccessful();
@@ -187,29 +233,11 @@ public class HistoryActivity extends AppCompatActivity {
                         for(int i = 0; i < DrwNum.size(); i++) {
                             Log.e("asd", "DrwNo = " + DrwNum.get(i));
                         }
-                        List<String>list = new ArrayList<>();
+//                        list = new ArrayList<>();
                         list.add(convertIntoString(Winnum));
-
-                        Log.e("asd", "list = " + list.get(0));
+                        Log.e("asd", "convertintoString = " + convertIntoString(Winnum));
 
 //                        String[] str = {"123", "123", "123", "123", "123", "123", "123","123", "123",};
-
-                        int cnt = 0;
-                        ArrayList<LottoNum> Data = new ArrayList<>();
-                        for(int i = 0; i < 50; i++){
-                            LottoNum item = new LottoNum();
-                            String str = list.get(0);
-                            item.LottoNum = "" + (i+1);
-                            item.WinNum = str;
-//                            item.WinNum = str[cnt++];
-                            Data.add(item);
-                            if(cnt >= Winnum.size()) cnt = 0;
-                        }
-
-                        m_listView = (ListView)findViewById(R.id.list_view);
-                        ListAdapter adapter = new LottoAdapter(Data);
-                        m_listView.setAdapter(adapter);
-
 
                     }
                 }
@@ -218,6 +246,23 @@ public class HistoryActivity extends AppCompatActivity {
                 }
             });
         }
+        return list;
+    }
+
+    public void result(){
+        int cnt = 0;
+        ArrayList<LottoNum> Data = new ArrayList<>();
+        for(int i = 0; i < 50; i++){
+            LottoNum item = new LottoNum();
+            item.LottoNum = "" + (i+1);
+            item.WinNum = list.get(i);
+            Data.add(item);
+            if(cnt >= list.size()) cnt = 0;
+        }
+
+        m_listView = (ListView)findViewById(R.id.list_view);
+        ListAdapter adapter = new LottoAdapter(getApplicationContext() , Data);
+        m_listView.setAdapter(adapter);
     }
 }
 

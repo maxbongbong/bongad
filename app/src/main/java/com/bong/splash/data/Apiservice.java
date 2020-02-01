@@ -3,6 +3,7 @@ package com.bong.splash.data;
 import io.reactivex.Single;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface Apiservice {
@@ -13,4 +14,5 @@ public interface Apiservice {
 
     @GET ("common.do?method=getLottoNumber")
     Single<Lotto> getCommentRx(@Query("drwNo") int drwNo);
+
 }

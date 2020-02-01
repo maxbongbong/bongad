@@ -4,6 +4,8 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Lotto {
@@ -23,4 +25,5 @@ public class Lotto {
     public String firstWinamnt;
     public String firstPrzwnerCo;
     public String firstAccumamnt;
+
 }
