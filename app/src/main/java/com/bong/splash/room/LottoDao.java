@@ -47,13 +47,12 @@ public interface LottoDao {
     //Frequency
     //##########
 
-//    @Query("SELECT * FROM Frequency WHERE drwNo = :drwNo")
-//    Single<Lotto> WinLotto(int drwNo);
+    @Query("SELECT * FROM Frequency WHERE drwNo = :drwNo")
+    Single<Lotto> WinLotto(int drwNo);
 
 
-//    @Query("SELECT * FROM Lotto WHERE drwNo = :drwNo")
-//    fun getUserById(id: String): Single<Lotto>
-
+    @Query("SELECT * FROM Lotto ORDER BY drwNo DESC")
+    Single<List<Lotto>> Alllottos();
 }
 
 

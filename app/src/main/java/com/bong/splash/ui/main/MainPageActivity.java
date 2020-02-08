@@ -63,8 +63,9 @@ public class MainPageActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         ArrayList<String> list = intent.getStringArrayListExtra("list");
-//        HashMap<ArrayList<String>,ArrayList<String>> list1 = (HashMap<ArrayList<String>, ArrayList<String>>) intent.getSerializableExtra("list1");
         ArrayList<String> str = intent.getStringArrayListExtra("str");
+        ArrayList<Integer>pre = intent.getIntegerArrayListExtra("pre");
+
         //생성하기 버튼
         Button generate_button = findViewById(R.id.bt_generate);
         generate_button.setOnClickListener(v -> {
@@ -77,11 +78,6 @@ public class MainPageActivity extends AppCompatActivity {
             //EditText값 가져오기
             tv_result = findViewById(R.id.tv_event_number);
             tv_result.getText().toString();
-            if (tv_result.getText().toString().length() == 0) {
-                Log.e("edittext", "없음");
-            }else{
-                Log.e("edittext", "text = " + tv_result.getText().toString());
-            }
 
         });
 
@@ -105,6 +101,8 @@ public class MainPageActivity extends AppCompatActivity {
         Button trend_button = findViewById(R.id.bt_trend);
         trend_button.setOnClickListener(v -> {
             Intent newIntent = new Intent(getApplicationContext(), TrendActivity.class);
+            newIntent.putIntegerArrayListExtra("pre", pre);
+            Log.e("pre", "pre1 = " + pre);
             startActivity(newIntent);
         });
 
@@ -140,6 +138,7 @@ public class MainPageActivity extends AppCompatActivity {
         });
     }
 
+
     //토스트 메시지 띄우기
     void showToast() {
         Toast.makeText(this.getApplicationContext(), R.string.generate_num, Toast.LENGTH_LONG).show();
@@ -154,13 +153,6 @@ public class MainPageActivity extends AppCompatActivity {
         String str1 = convertIntoString(Win);
         String drwNo = tv_result.getText().toString();
         builder.setMessage("나의 번호 = [" + str + "]\n" + drwNo + "회번호 = [" + str1 + "]\n" + LottoRank(Win));
-        builder.setPositiveButton("읽음",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getApplicationContext(),"읽기완료", Toast.LENGTH_LONG).show();
-                    }
-                });
         builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -169,6 +161,7 @@ public class MainPageActivity extends AppCompatActivity {
         });
         builder.show();
     }
+
     //로또 등수확인
     public String LottoRank(List<Integer> Win) {
         int cnt = 0;
@@ -224,15 +217,6 @@ public class MainPageActivity extends AppCompatActivity {
             Result.add(list.get(idx));
             list.remove(idx);
         }
-
-//        25회 당첨 번호 = 2, 4, 21, 26, 43, 44 + 16
-//        Result.add(2);
-//        Result.add(4);
-//        Result.add(21);
-//        Result.add(26);
-//        Result.add(43);
-//        Result.add(1);
-//        Result.add(16);
 
         // 정렬
         Collections.sort(Result);//오름차순
@@ -353,6 +337,7 @@ public class MainPageActivity extends AppCompatActivity {
         });
     }
 }
+
 
 
 

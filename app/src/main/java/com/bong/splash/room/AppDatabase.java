@@ -6,9 +6,10 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import com.bong.splash.data.Frequency;
 import com.bong.splash.data.Lotto;
 
-@Database(entities = {Lotto.class}, version = 1, exportSchema = false)
+@Database(entities = {Lotto.class, Frequency.class}, version = 2, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract LottoDao getLottoDao();
 

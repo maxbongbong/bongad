@@ -54,4 +54,6 @@
     <string name="test">Test</string>
     <string name="auto_num">자동 추첨 번호</string>
     <string name="hello_history">Hello history!</string>
+    <string name="_1">1</string>
+    <string name="_1_2_3_4_5_6_7">1, 2, 3, 4, 5, 6 + 7</string>
 </resources>

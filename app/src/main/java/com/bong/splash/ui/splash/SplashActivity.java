@@ -2,6 +2,7 @@ package com.bong.splash.ui.splash;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -32,27 +33,18 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         disposables = new CompositeDisposable();
-
         dao = AppDatabase.getDatabase(this).getLottoDao();
         getLottosAndSave();
-
     }
-//    void send(ArrayList<String> list){
-//        final int sub = 1001;
-//
-//        Intent intent = new Intent(this, MainPageActivity.class);
-//        intent.putStringArrayListExtra("list", list);
-//        startActivityForResult(intent, sub);
-//
-//    }
 
-//    void send(ArrayList<String> list, HashMap<ArrayList<String>, ArrayList<String>> list1){
-void send(ArrayList<String> list, ArrayList<String> str){
+void send(ArrayList<String> list, ArrayList<String> str, ArrayList<Integer> num){
+
         final int sub = 1001;
 
         Intent intent = new Intent(this, MainPageActivity.class);
         intent.putStringArrayListExtra("list", list);
         intent.putStringArrayListExtra("str", str);
+        intent.putIntegerArrayListExtra("pre", num);
         startActivityForResult(intent, sub);
 
     }
@@ -83,15 +75,12 @@ void send(ArrayList<String> list, ArrayList<String> str){
 //                        })
 //        );
 
-
-
         Apiservice apiService = new RetrofitMaker().createService(this, Apiservice.class);
 
         // 복수개 통신
         ArrayList<String>list = new ArrayList<>();
         ArrayList<String> str = new ArrayList<>();
-//        HashMap<ArrayList<String>, ArrayList<String>> list1 = new HashMap<>();
-        ArrayList<HashMap<String, String>> map = new ArrayList<>();
+        ArrayList<Integer>pre = new ArrayList<>();
         ArrayList<Single<Lotto>> temp = new ArrayList<Single<Lotto>>();
         for (int i = 1; i <= 50; i++) {
             temp.add(
@@ -113,8 +102,10 @@ void send(ArrayList<String> list, ArrayList<String> str){
                         win.add(lotto.bnusNo);
 
                         list.add("" + num.get(0));
+                        for(int j = 0; j < win.size(); j++){
+                            pre.add(win.get(j));
+                        }
                         str.add(convertIntoString(win));
-//                        list1.put(list, str);
 
                         return lotto;
                     })
@@ -126,20 +117,14 @@ void send(ArrayList<String> list, ArrayList<String> str){
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSubscriber<Lotto>() {
                     @Override
-                    public void onNext(Lotto lotto) {
-
-                    }
-
+                    public void onNext(Lotto lotto) {}
                     @Override
                     public void onError(Throwable t) {
                         t.printStackTrace();
                     }
-
                     @Override
                     public void onComplete() {
-
-                        send(list, str);
-
+                        send(list, str, pre);
                         SplashActivity.this.finish(); // 로딩페이지 Activity stack에서 제거
                     }
                 }));

@@ -54,6 +54,8 @@ dependencies {
     implementation 'com.github.ybq:Android-SpinKit:1.4.0'
     implementation 'androidx.room:room-runtime:2.2.0'
     annotationProcessor 'androidx.room:room-compiler:2.2.0'
+    implementation "androidx.room:room-rxjava2:2.2.0"
+
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     /**
      * Room components
