@@ -1,5 +1,7 @@
 package com.bong.splash.ui.main;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -81,10 +83,7 @@ public class MainPageActivity extends AppCompatActivity {
 
         //결과보기 버튼
         Button result_bt = findViewById(R.id.bt_match);
-        result_bt.setOnClickListener(v -> {
-            callAPIs();
-//            show(ing);
-        });
+
 
         //히스토리 버튼
         Button history_button = findViewById(R.id.bt_history);
@@ -103,32 +102,63 @@ public class MainPageActivity extends AppCompatActivity {
             startActivity(newIntent);
         });
 
-        //생성하기 버튼 리스너 속성 추가
+        //생성하기 버튼, 결과보기 버튼 리스너 속성 추가
         TextView editText = findViewById(R.id.tv_event_number);
         editText.addTextChangedListener(new TextWatcher() {
 
             @Override
-
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
                 // 입력되는 텍스트에 변화가 있을 때
+
             }
 
             @Override
-
             public void afterTextChanged(Editable s) {
 
                 // 입력이 끝났을 때
                 String text = s.toString();
                 if (text.length() != 0) {
+                    result_bt.setEnabled(true);
                     generate_button.setEnabled(true); //버튼 활성화
+                    String drwNo = editText.getText().toString();
+                    int num = Integer.parseInt(drwNo);
+                    if (num > 0 && num < 51) {
+                        result_bt.setOnClickListener(v -> {
+                            callAPIs();
+                        });
+                    } else {
+                        result_bt.setOnClickListener(v -> {
+                            if (flag) {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(MainPageActivity.this);
+                                builder.setTitle("경고");
+                                builder.setMessage("회차 번호는 1번 부터 50번까지만 가능합니다.");
+                                builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        flag = true;
+                                        Toast.makeText(getApplicationContext(),"확인", Toast.LENGTH_LONG).show();
+                                    }
+                                });
+
+                                builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                                    @Override
+                                    public void onCancel(DialogInterface dialog) {
+                                        flag = true;
+                                    }
+                                });
+                                builder.show();
+                                flag = false;
+                            }
+                        });
+
+                    }
                 } else {
+                    result_bt.setEnabled(false);
                     generate_button.setEnabled(false); //버튼 비활성화
                 }
             }
 
             @Override
-
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 // 입력하기 전에
             }
@@ -166,7 +196,6 @@ public class MainPageActivity extends AppCompatActivity {
                 @Override
                 public void onCancel(DialogInterface dialog) {
                     flag = true;
-//                    Toast.makeText(getApplicationContext(),"확인", Toast.LENGTH_LONG).show();
                 }
             });
             builder.show();
@@ -257,6 +286,35 @@ public class MainPageActivity extends AppCompatActivity {
         return sb.toString();
     }
 
+    void callAPIs() {
+
+        int i = Integer.parseInt(tv_result.getText().toString());
+        Apiservice apiService = new RetrofitMaker().createService(this, Apiservice.class);
+        Call<Lotto> commentStr = apiService.getComment(i);
+        commentStr.enqueue(new Callback<Lotto>() {
+            @Override
+            public void onResponse(Call<Lotto> call, Response<Lotto> response) {
+                boolean isSuccessful = response.isSuccessful();
+                if (isSuccessful) {
+                    Lotto lotto = response.body();
+                    ArrayList<Integer>temp = new ArrayList<>();
+                    temp.add(lotto.drwtNo1);
+                    temp.add(lotto.drwtNo2);
+                    temp.add(lotto.drwtNo3);
+                    temp.add(lotto.drwtNo4);
+                    temp.add(lotto.drwtNo5);
+                    temp.add(lotto.drwtNo6);
+                    temp.add(lotto.bnusNo);
+
+                    show(temp);
+                }
+            }
+            @Override
+            public void onFailure(Call<Lotto> call, Throwable t) {
+            }
+        });
+    }
+
     //Single패턴 DB조회하기
 //    void Winning_number() {
 
@@ -312,35 +370,6 @@ public class MainPageActivity extends AppCompatActivity {
 //        list.add(new Lotto());
 //        return Single.just(list);
 //    }
-
-    void callAPIs() {
-
-        int i = Integer.parseInt(tv_result.getText().toString());
-        Apiservice apiService = new RetrofitMaker().createService(this, Apiservice.class);
-        Call<Lotto> commentStr = apiService.getComment(i);
-        commentStr.enqueue(new Callback<Lotto>() {
-            @Override
-            public void onResponse(Call<Lotto> call, Response<Lotto> response) {
-                boolean isSuccessful = response.isSuccessful();
-                if (isSuccessful) {
-                    Lotto lotto = response.body();
-                    ArrayList<Integer>temp = new ArrayList<>();
-                    temp.add(lotto.drwtNo1);
-                    temp.add(lotto.drwtNo2);
-                    temp.add(lotto.drwtNo3);
-                    temp.add(lotto.drwtNo4);
-                    temp.add(lotto.drwtNo5);
-                    temp.add(lotto.drwtNo6);
-                    temp.add(lotto.bnusNo);
-
-                    show(temp);
-                }
-            }
-            @Override
-            public void onFailure(Call<Lotto> call, Throwable t) {
-            }
-        });
-    }
 }
 
 

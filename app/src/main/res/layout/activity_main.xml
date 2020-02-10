@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:paddingTop="@dimen/spacing_large"
     android:paddingBottom="@dimen/spacing_large"
     tools:context=".ui.splash.SplashActivity">
@@ -13,9 +13,10 @@
         android:id="@+id/layout_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
         android:fadingEdge="none"
-        app:layout_constraintBottom_toBottomOf="parent">
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -164,9 +165,9 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/bt_history"
-                    android:textColor="@color/line_title"
                     style="@style/NextButtonOutLined"
                     android:text="@string/button_history"
+                    android:textColor="@color/line_title"
                     app:backgroundTint="@color/colorAccent"
                     app:cornerRadius="3dp"
                     app:layout_constraintBottom_toBottomOf="parent"
