@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.main.MainPageActivity" />
-        <activity android:name=".ui.history.HistoryActivity" />
-        <activity android:name=".ui.trend.TrendActivity" />
+        <activity android:name=".ui.history.HistoryActivity" android:launchMode="singleTop"/>
+        <activity android:name=".ui.trend.TrendActivity" android:launchMode="singleTop"/>
     </application>
 </manifest>
