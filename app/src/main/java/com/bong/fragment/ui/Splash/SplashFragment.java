@@ -1,15 +1,12 @@
 package com.bong.fragment.ui.Splash;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.bong.fragment.HomeFragment;
 import com.bong.fragment.MainActivity;
@@ -30,15 +27,14 @@ import io.reactivex.subscribers.DisposableSubscriber;
 public class SplashFragment extends Fragment {
 
     protected CompositeDisposable disposables;
-    LottoDao dao;
-    Fragment homeFragment;
+    private LottoDao dao;
+    private Fragment homeFragment;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.fragment_splash, container, false);
-        homeFragment = new HomeFragment();
         disposables = new CompositeDisposable();
         dao = AppDatabase.getDatabase(getActivity()).getLottoDao();
 
@@ -73,7 +69,6 @@ public class SplashFragment extends Fragment {
     }
 
     public void getLottoAndSave(){
-
         Apiservice apiService = new RetrofitMaker().createService(getActivity(), Apiservice.class);
 
         ArrayList<String>list = new ArrayList<>();
@@ -121,7 +116,7 @@ public class SplashFragment extends Fragment {
                     public void onComplete() {
 
                         send(list, str, pre);
-                        ((MainActivity)getActivity()).ChangeFragment(1, homeFragment);
+                        ((MainActivity)getActivity()).changeFragment(MainActivity.Type.home, homeFragment);
                     }
                 }));
     }
