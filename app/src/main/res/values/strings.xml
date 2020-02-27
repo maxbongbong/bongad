@@ -36,7 +36,9 @@
     <string name="message_win">Your ranking is %d</string>
     <string name="message_lost">Sorry, maybe next time.\n\nYours: %s,\nWinning Numbers: %s</string>
     <string name="please_wait">Please Wait..</string>
-
+    <string name="notification">알림</string>
+    <string name="possible">회차 번호는 1회부터 50회까지만 가능 합니다.</string>
+    <string name="check">확인</string>
     <!-- Trend -->
     <string name="no">No. %d</string>
     <string name="times">%d times</string>
