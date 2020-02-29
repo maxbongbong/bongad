@@ -238,13 +238,11 @@ ArrayList<LottoNum>data를 초기화 시키고 1번부터 45번까지를 key값�
 >LottoAdapter,
 >LottoNum
 
-기능 : 
-
 4. 나머지
 
 >AppApplication : Stetho 사용 목적(크롬에서 DB데이터를 눈으로 직접 확인 가능)
 
-@Override
+    @Override
     public void onCreate() {
         super.onCreate();
         if(BuildConfig.DEBUG)
@@ -263,7 +261,7 @@ fragment_main을 view로 리턴
     }
 onViewCreated에 버튼 리스너들 구현하고, 
 generateBtn을 클릭시 - EditText인 tv_result의 텍스트 값이 변하는것에 따라 버튼과 레이아웃 구성
-입력되는 EditText에 변화가 있으면 v_result의 구역과 레이아웃이 사라진다.
+입력되는 EditText에 변화가 있으면 v_result의 할당된 구역과 레이아웃이 사라진다.
 generateBtn과 result_bt은 tv_result의 값이 0이 아니면 활성화되고 0일시에 비활성화 된다.
 
     generateBtn.setOnClickListener(v -> {
@@ -290,12 +288,13 @@ generateBtn과 result_bt은 tv_result의 값이 0이 아니면 활성화되고 0
                   callAPIs();
                 });
               } else {
+              //결과보기 버튼 클릭 시 다이얼로그 생성(당첨번호와 회차번호 비교 후 등수 출력)
                 result_bt.setOnClickListener(v -> {
                   if (flag) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setTitle(R.string.notification);
                     builder.setMessage(R.string.possible);
-                    builder.setPositiveButton(R.string.check, new DialogInterface.OnClickListener() {
+                    builder.setPositiveButton(R.string.check, new                                             DialogInterface.OnClickListener() {
                       @Override
                       public void onClick(DialogInterface dialog, int which) {
                         flag = false;
@@ -321,5 +320,75 @@ generateBtn과 result_bt은 tv_result의 값이 0이 아니면 활성화되고 0
        });
      })
      
-     >MainActivity : 
+>MainActivity
 
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        Fragment splashFragment;
+        splashFragment = new SplashFragment();
+        Toolbar(0);
+        changeFragment(Type.splash, splashFragment);
+    }
+
+
+    public void Toolbar(int num){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        switch (num){
+            case 0:
+                getSupportActionBar().hide();
+                break;
+            case 1:
+                getSupportActionBar().show();
+                getSupportActionBar().setTitle(R.string.title_main);
+                break;
+            case 2:
+                getSupportActionBar().setTitle(R.string.title_history);
+                break;
+            case 3:
+                getSupportActionBar().setTitle(R.string.title_trend);
+                break;
+        }
+    }
+
+enum을 사용해서 코드가 단순해지며 가독성이 좋습니다. 인스턴스 생성과 상속을 방지합니다.
+
+    public enum Type {
+        splash, home, trend, history
+    }
+
+changeFragment메소드 - 이프로젝트에서 엑티비티는 MainActivity 하나 이기 때문에 모든 프래그먼트들은 교체 해주기 위해 만듭니다.
+Aactivity 또는 Fragmentr간의 상호작용을 위해 이어주는 역할을 하고 생성, 대체, 삭제를 하기 원활하게 하기 위해서만만들어줘야 하는 것들에 대해 만들어 놓은 메소드 입니다.
+1.FragmentManager fragmentManager를 만들어줍니다. -> 엑티비티나 프래그먼트 간의 상호작용하게 해줍니다.
+2.FragmentTransaction transaction을 만들어줍니다. -> 교체, 생성, 삭제 또는 Backstack저장하는 작업들을 할 수있게 해줍니다.
+3.transaction = fragmentManager.beginTransaction(); - beginTransaction();을 호출해주고 이후에 교체, 생성, 삭제 등이 가능.
+4.그리고 항상 마지막으로 제일 중요한 transaction.commit();을 해줘야 transaction작업을 정상적으로 수행 할 수 있습니다.
+
+    public void changeFragment(Type type, Fragment fragment){
+
+        //화면 전환 프레그먼트 선언 및 초기화면 설정
+        //프레그먼트 매니저로 추가, 삭제, 대체 가능
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        //애니메이션 추가 - 이 메소드 실행 할 때 레이아웃이 오른쪽으로 사라지면서 바꿈.
+        transaction.setCustomAnimations(R.anim.slide_in_right_left,              R.anim.fragment_close_exit);
+type.ordinal()은 enum메소드 안에 있는 아이템들에 정의된 순서대로 리턴한다. 1보다 작으면 해당 프래그먼트로 대체하고 backstack에 저장하지 않고, 1보다 클시 백스텍에 저장해서 뒤로가기가 가능하다.
+        
+        if (type.ordinal() <=1) {
+            transaction.replace(R.id.contentFrame, fragment).commit();
+        }else if(type.ordinal() > 1){
+            //해당 transaction 을 Back Stack 에 저장
+            transaction.addToBackStack(null);
+            transaction.replace(R.id.contentFrame, fragment).commit();
+        }
+    }
+
+## Author
+
+👤 **이봉희(BongHee Lee)**
+
+- Github: [@maxbongbong](https://github.com/maxbongbong) 
