@@ -39,7 +39,7 @@ LottoDao : Data Access Object생성. 데이터베이스를 통해 수행 할 작
 경로 : com.bong.fragment/ui
 
 1. History
->HisstoryFragment
+>HistoryFragment
 
 1회부터 50회까지의 당첨 번호를 알려준다.
 리사이클러 뷰 리턴
@@ -92,7 +92,6 @@ Holder라는 클래스 생성하고 hitoryfragment의 Textview에 연결.
 
 2. Splah
 >SplashFargment
-기능
 
 view생성시 fragment_splash 레이아웃이 연결, 
 
@@ -170,6 +169,7 @@ send(list, str, pre)를 HomeFragment로 보내주고 HomeFragment로 화면을 �
 1번부터 45번까지 중 제일 자주 출현하는 숫자의 횟수를 보여준다.
 
 >TrendFragment
+
 HomeFragment에서 보낸 데이터를 initDataset()에서 받고 HashMap으로 String, Integer 타입을 받고,
 cnt를 Integer형식으로 초기화 시킨후 pre에 데이터를 받은 후 int vaseVal에 cnt가 null이면 vaseVal값을 넣고, false일시 0을 넣는다.
 cntMap에 key값은 1~45번까지의 String형식으로 넣어주고 같은 번호 출현시 baseVal + 1해준 값을 넣어준다.
