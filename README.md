@@ -39,25 +39,22 @@ LottoDao : Data Access Object생성. 데이터베이스를 통해 수행 할 작
 경로 : com.bong.fragment/ui
 
 1. History
-
->HistoryFragment
+>HisstoryFragment
 
 1회부터 50회까지의 당첨 번호를 알려준다.
-
 리사이클러 뷰 리턴
 
      View rootView = inflater.inflate(R.layout.item_list, container, false);
+HomeFragment에서 Bundle로 넘긴 data 받기.
 
-HomeFragment에서 Bundle로 넘긴 data 받기
-
-   private void initDataset(){
+     private void initDataset(){
         Bundle extra = this.getArguments();
         ArrayList<String>list = extra.getStringArrayList("list");        
         ArrayList<String>str = extra.getStringArrayList("str");  
         data = new ArrayList<>();     
-   }
->LottoAdapter : HistoryFragment에 연결할 어뎁터
+     }
 
+>LottoAdapter : HistoryFragment에 연결할 어뎁터
 리사이클러뷰에 표시할 ViewHolder에 fragment_history 연결
 
     @NonNull
@@ -190,8 +187,7 @@ cntMap에 key값은 1~45번까지의 String형식으로 넣어주고 같은 번�
             cntMap.put(pre.get(i).toString(), baseVal + 1);
         }
         convert(cntMap);
-    }
-    
+    }  
 value 내림차순으로 정렬하고, value가 같으면 key 오름차순으로 정렬
 
     private void convert(Map<String, Integer>cntMap){
@@ -239,7 +235,6 @@ ArrayList<LottoNum>data를 초기화 시키고 1번부터 45번까지를 key값�
 >LottoNum
 
 4. 나머지
-
 >AppApplication : Stetho 사용 목적(크롬에서 DB데이터를 눈으로 직접 확인 가능)
 
     @Override
@@ -259,10 +254,8 @@ fragment_main을 view로 리턴
 
         return rootView;
     }
-onViewCreated에 버튼 리스너들 구현하고, 
-generateBtn을 클릭시 - EditText인 tv_result의 텍스트 값이 변하는것에 따라 버튼과 레이아웃 구성
-입력되는 EditText에 변화가 있으면 v_result의 할당된 구역과 레이아웃이 사라진다.
-generateBtn과 result_bt은 tv_result의 값이 0이 아니면 활성화되고 0일시에 비활성화 된다.
+onViewCreated에 버튼 리스너들 구현하고, generateBtn을 클릭시 - EditText인 tv_result의 텍스트 값이 변하는것에 따라 버튼과 레이아웃 구성합니다.
+입력되는 EditText에 변화가 있으면 v_result의 할당된 구역과 레이아웃이 사라지고, generateBtn과 result_bt은 tv_result의 값이 0이 아니면 활성화되고 0일시에 비활성화 된다.
 
     generateBtn.setOnClickListener(v -> {
       tv_result.addTextChangedListener(new TextWatcher() {
@@ -363,9 +356,13 @@ enum을 사용해서 코드가 단순해지며 가독성이 좋습니다. 인스
 
 changeFragment메소드 - 이프로젝트에서 엑티비티는 MainActivity 하나 이기 때문에 모든 프래그먼트들은 교체 해주기 위해 만듭니다.
 Aactivity 또는 Fragmentr간의 상호작용을 위해 이어주는 역할을 하고 생성, 대체, 삭제를 하기 원활하게 하기 위해서만만들어줘야 하는 것들에 대해 만들어 놓은 메소드 입니다.
+
 1.FragmentManager fragmentManager를 만들어줍니다. -> 엑티비티나 프래그먼트 간의 상호작용하게 해줍니다.
+
 2.FragmentTransaction transaction을 만들어줍니다. -> 교체, 생성, 삭제 또는 Backstack저장하는 작업들을 할 수있게 해줍니다.
+
 3.transaction = fragmentManager.beginTransaction(); - beginTransaction();을 호출해주고 이후에 교체, 생성, 삭제 등이 가능.
+
 4.그리고 항상 마지막으로 제일 중요한 transaction.commit();을 해줘야 transaction작업을 정상적으로 수행 할 수 있습니다.
 
     public void changeFragment(Type type, Fragment fragment){
