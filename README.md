@@ -64,7 +64,6 @@ HomeFragment에서 Bundle로 넘긴 data 받기.
         Holder holder = new Holder(view);
         return holder;
     }
-
 holder에 LottoNum에서 받은 String 객체를 position번째에 넣어준다.
 
     @Override
@@ -229,7 +228,6 @@ ArrayList<LottoNum>data를 초기화 시키고 1번부터 45번까지를 key값�
         }
 
     }
-
 나머지 기능들은 History패키지에 있는 것들과 같다.
 >LottoAdapter,
 >LottoNum
@@ -244,7 +242,8 @@ ArrayList<LottoNum>data를 초기화 시키고 1번부터 45번까지를 key값�
             Stetho.initializeWithDefaults(this);
     }
 >HomeFragment
-fragment_main을 view로 리턴 
+
+fragment_main 을 view로 리턴 
 
     @Nullable
     @Override
@@ -315,6 +314,7 @@ onViewCreated에 버튼 리스너들 구현하고, generateBtn을 클릭시 - Ed
      
 >MainActivity
 
+Mainactivity생성시 activity_main 레이아웃을 view로 return하고, splashfragment를 띄워주고 툴바는 안보이게 합니다.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -326,6 +326,8 @@ onViewCreated에 버튼 리스너들 구현하고, generateBtn을 클릭시 - Ed
         changeFragment(Type.splash, splashFragment);
     }
 
+툴바는 안드로이드 API level21부터 추가된 위젯으로, 기존에 있던 Appbar보다 버전에 따라 달라지는 파편호 문제를 해결하고, 호환성을 높이기 위해서 사용합니다.
+Toolbar(int num)은 각각의 프래그먼트에 따라 setTitle로 제목을 바꾸고 어떤 화면인지 구별 해놓은 메소드입니다.
 
     public void Toolbar(int num){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
