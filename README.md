@@ -390,4 +390,4 @@ type.ordinal()은 enum메소드 안에 있는 아이템들에 정의된 순서�
 
 👤 **이봉희(BongHee Lee)**
 
-- Github: [@maxbongbong](https://github.com/maxbongbong)https://github.com/maxbongbong 
+- Github: [@maxbongbong](https://github.com/maxbongbong) - https://github.com/maxbongbong 
