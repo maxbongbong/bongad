@@ -1,6 +1,7 @@
 package com.bong.fragment;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
@@ -10,13 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.bong.fragment.data.Apiservice;
@@ -36,8 +35,6 @@ import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
 
-    private Fragment fragmenthistory;
-    private Fragment fragmenttrend;
     private EditText tv_result;
     private TextView tv_generate;
     private Button result_bt;
@@ -55,7 +52,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.fragment_main, container, false);
-
+        ((MainActivity)getActivity()).Toolbar(1);
         return rootView;
     }
 
@@ -71,166 +68,92 @@ public class HomeFragment extends Fragment {
         //히스토리 버튼
         Button history = getView().findViewById(R.id.bt_history);
         history.setOnClickListener(v -> {
-
+            Fragment fragmenthistory;
             Bundle args = new Bundle();
             args.putStringArrayList("list", list);
             args.putStringArrayList("str", str);
             fragmenthistory = new HistoryFragment();
             fragmenthistory.setArguments(args);
             ((MainActivity)getActivity()).changeFragment(MainActivity.Type.history, fragmenthistory);
-
         });
 
         //트렌드 버튼
         Button trend = getView().findViewById(R.id.bt_trend);
         trend.setOnClickListener(v -> {
-
+            Fragment fragmenttrend;
             Bundle args = new Bundle();
             args.putIntegerArrayList("pre", pre);
             fragmenttrend = new TrendFragment();
             fragmenttrend.setArguments(args);
             ((MainActivity)getActivity()).changeFragment(MainActivity.Type.trend, fragmenttrend);
-
         });
-
-        //결과보기 버튼
-        result_bt = getView().findViewById(R.id.bt_match);
 
         //번호 생성 버튼
         generateBtn = getView().findViewById(R.id.bt_generate);
         generateBtn.setOnClickListener(v -> {
 
-            View view1 = getView().findViewById(R.id.v_result);
-            view1.setVisibility(View.VISIBLE);
-            showToast();
-            getLottoTicket();
-
-            tv_generate = getView().findViewById(R.id.tv_lotto);
-            tv_generate.setText(convertIntoString(Result));
-
-            //생성 버튼 누를 시 v_result layout보임
-            CardView layout = getView().findViewById(R.id.v_result);
-            layout.setEnabled(true);
-
             //EditText값 가져오기
             tv_result = getView().findViewById(R.id.tv_event_number);
-            tv_result.getText().toString();
-            tv_result.addTextChangedListener(new TextWatcher() {
-                //입력전
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            String drwNo = tv_result.getText().toString();
+            int num = Integer.parseInt(drwNo);
+            if (num > 0 && num < 51) {
+                View view1 = getView().findViewById(R.id.v_result);
+                view1.setVisibility(View.VISIBLE);
+                showToast();
+                getLottoTicket();
+                tv_generate = getView().findViewById(R.id.tv_lotto);
+                tv_generate.setText(convertIntoString(Result));
 
-                }
-                //입력되는 텍스트에 변화가 있을때
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    layout.setVisibility(View.GONE);
-                }
-                //입력후
-                @Override
-                public void afterTextChanged(Editable s) {
+                //생성 버튼 누를 시 v_result layout보임
+//                CardView layout = getView().findViewById(R.id.v_result);
+//                layout.setEnabled(true);
+                tv_result.addTextChangedListener(new TextWatcher() {
+                    //입력전
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                    String text = s.toString();
-                    if (text.length() != 0) {
-                        result_bt.setEnabled(true);
-                        generateBtn.setEnabled(true);//버튼 활성화
-                        String drwNo = tv_result.getText().toString();
-                        int num = Integer.parseInt(drwNo);
-                        if (num > 0 && num < 51) {
-                            result_bt.setOnClickListener(v -> {
-                                callAPIs();
-                            });
-                        } else {
-                            result_bt.setOnClickListener(v -> {
-                                if (flag) {
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                                    builder.setTitle(R.string.notification);
-                                    builder.setMessage(R.string.possible);
-                                    builder.setPositiveButton(R.string.check, new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            flag = false;
-                                            Toast.makeText(getActivity(), R.string.check, Toast.LENGTH_LONG);
-                                        }
-                                    });
-                                    builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                                        @Override
-                                        public void onCancel(DialogInterface dialog) {
-                                            flag = true;
-                                        }
-                                    });
-                                    builder.show();
-                                    flag = false;
-                                }
-                            });
-                        }
-                    } else {
-                        result_bt.setEnabled(false);//버튼 비활성
-                        generateBtn.setEnabled(false);
                     }
+                    //입력되는 텍스트에 변화가 있을때
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        view1.setVisibility(View.GONE);
+                    }
+                    //입력후
+                    @Override
+                    public void afterTextChanged(Editable s) {}
+                });
+            } else {
+                if (flag) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle(R.string.notification);
+                    builder.setMessage(R.string.possible);
+                    builder.setPositiveButton(R.string.check, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+//                            flag = false;
+                            Toast.makeText(getActivity(), R.string.check, Toast.LENGTH_LONG);
+
+                        }
+                    });
+                    builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface dialog) {
+                            flag = true;
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.show();
+                    flag = false;
                 }
-            });
+            }
+            flag = true;
         });
 
-//        tv_result = getView().findViewById(R.id.tv_event_number);
-//        if(tv_result.getText().toString() == ""){
-//
-//        }
-//        tv_result.addTextChangedListener(new TextWatcher() {
-//            //입력전
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//            //입력되는 텍스트에 변화가 있을때
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//            }
-//            //입력후
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//
-//                String text = s.toString();
-//                if (text.length() != 0) {
-//                    result_bt.setEnabled(true);
-//                    generateBtn.setEnabled(true);//버튼 활성화
-//                    String drwNo = tv_result.getText().toString();
-//                    int num = Integer.parseInt(drwNo);
-//                    if (num > 0 && num < 51) {
-//                        result_bt.setOnClickListener(v -> {
-//                            callAPIs();
-//                        });
-//                    } else {
-//                        result_bt.setOnClickListener(v -> {
-//                            if (flag) {
-//                                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-//                                builder.setTitle(R.string.notification);
-//                                builder.setMessage(R.string.possible);
-//                                builder.setPositiveButton(R.string.check, new DialogInterface.OnClickListener() {
-//                                    @Override
-//                                    public void onClick(DialogInterface dialog, int which) {
-//                                        flag = false;
-//                                        Toast.makeText(getActivity(), R.string.check, Toast.LENGTH_LONG);
-//                                    }
-//                                });
-//                                builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
-//                                    @Override
-//                                    public void onCancel(DialogInterface dialog) {
-//                                        flag = true;
-//                                    }
-//                                });
-//                                builder.show();
-//                                flag = false;
-//                            }
-//                        });
-//                    }
-//                } else {
-//                    result_bt.setEnabled(false);//버튼 비활성
-//                    generateBtn.setEnabled(false);
-//                }
-//            }
-//        });
+        //결과보기 버튼
+        result_bt = getView().findViewById(R.id.bt_match);
+        result_bt.setOnClickListener(v1 -> {
+            callAPIs();
+        });
     }
 
     void callAPIs() {
@@ -263,8 +186,7 @@ public class HomeFragment extends Fragment {
     }
 
     void show(List<Integer> Win){
-        if(flag){
-
+        if (flag) {
             androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(getActivity());
             builder.setTitle(R.string.result);
 
@@ -288,7 +210,6 @@ public class HomeFragment extends Fragment {
             builder.show();
             flag = false;
         }
-
     }
 
     //String 형식으로 형변환

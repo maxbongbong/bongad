@@ -28,6 +28,7 @@
     <string name="result">Result</string>
     <string name="button_history">History</string>
     <string name="button_trend">Trend</string>
+    <string name="toobarline">Server: dev, VerName: 1.0, VerCode: 1</string>
 
     <!-- Popup -->
     <string name="generate_num">"번호가 생성되었습니다."</string>

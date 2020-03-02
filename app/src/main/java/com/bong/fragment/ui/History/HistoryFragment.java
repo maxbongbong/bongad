@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bong.fragment.MainActivity;
 import com.bong.fragment.R;
 
 import java.util.ArrayList;
@@ -41,8 +42,7 @@ public class HistoryFragment extends Fragment {
 
         LottoAdapter adapter = new LottoAdapter(context, data);
         recyclerView.setAdapter(adapter);
-        Log.e("asdf", "here is history");
-
+        ((MainActivity)getActivity()).Toolbar(2);
         return rootView;
     }
 
@@ -53,8 +53,6 @@ public class HistoryFragment extends Fragment {
         data = new ArrayList<>();
         for(int i = 49; i >= 0; i--) {
             data.add(new LottoNum(list.get(i), str.get(i)));
-            if (list != null)
-                Log.e("history list", "history list = " + list.get(i));
         }
     }
 }
