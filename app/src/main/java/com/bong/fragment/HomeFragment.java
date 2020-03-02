@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,20 +38,12 @@ public class HomeFragment extends Fragment {
 
     private EditText tv_result;
     private TextView tv_generate;
-    private Button result_bt;
-    private Button generateBtn;
     List<Integer>Result;
     boolean flag = true;
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.fragment_main, container, false);
         ((MainActivity)getActivity()).Toolbar(1);
         return rootView;
@@ -88,51 +81,51 @@ public class HomeFragment extends Fragment {
             ((MainActivity)getActivity()).changeFragment(MainActivity.Type.trend, fragmenttrend);
         });
 
-        //번호 생성 버튼
-        generateBtn = getView().findViewById(R.id.bt_generate);
-        generateBtn.setOnClickListener(v -> {
+        //생성하기 버튼
+        Button generate = getView().findViewById(R.id.bt_generate);
+        generate.setEnabled(false);
+        tv_result = getView().findViewById(R.id.tv_event_number);
+        View view1 = getView().findViewById(R.id.v_result);
+        tv_result.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            //EditText값 가져오기
-            tv_result = getView().findViewById(R.id.tv_event_number);
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                view1.setVisibility(View.GONE);
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                String text = s.toString();
+                if (text.length() != 0) {
+                    generate.setEnabled(true);
+                }else{
+                    generate.setEnabled(false);
+                }
+            }
+        });
+
+        //생성버튼 클릭 리스너
+        generate.setOnClickListener(v -> {
             String drwNo = tv_result.getText().toString();
             int num = Integer.parseInt(drwNo);
             if (num > 0 && num < 51) {
-                View view1 = getView().findViewById(R.id.v_result);
                 view1.setVisibility(View.VISIBLE);
                 showToast();
                 getLottoTicket();
                 tv_generate = getView().findViewById(R.id.tv_lotto);
                 tv_generate.setText(convertIntoString(Result));
-
-                //생성 버튼 누를 시 v_result layout보임
-//                CardView layout = getView().findViewById(R.id.v_result);
-//                layout.setEnabled(true);
-                tv_result.addTextChangedListener(new TextWatcher() {
-                    //입력전
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                    }
-                    //입력되는 텍스트에 변화가 있을때
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        view1.setVisibility(View.GONE);
-                    }
-                    //입력후
-                    @Override
-                    public void afterTextChanged(Editable s) {}
-                });
-            } else {
+            }else{
                 if (flag) {
+                    //다이얼로그 띄우기(1보다 작고 50보다 크면 출력)
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setTitle(R.string.notification);
                     builder.setMessage(R.string.possible);
                     builder.setPositiveButton(R.string.check, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-//                            flag = false;
                             Toast.makeText(getActivity(), R.string.check, Toast.LENGTH_LONG);
-
                         }
                     });
                     builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
@@ -146,13 +139,12 @@ public class HomeFragment extends Fragment {
                     flag = false;
                 }
             }
+            //결과보기 버튼
+            Button result_bt = getView().findViewById(R.id.bt_match);
+            result_bt.setOnClickListener(v1 -> {
+                callAPIs();
+            });
             flag = true;
-        });
-
-        //결과보기 버튼
-        result_bt = getView().findViewById(R.id.bt_match);
-        result_bt.setOnClickListener(v1 -> {
-            callAPIs();
         });
     }
 
