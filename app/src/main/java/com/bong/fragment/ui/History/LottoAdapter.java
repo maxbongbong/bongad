@@ -17,7 +17,7 @@ import java.util.List;
 
 public class LottoAdapter extends RecyclerView.Adapter<LottoAdapter.Holder> {
 
-    private Context context;
+    Context context;
     private ArrayList<LottoNum> m_Datas;
     private LayoutInflater mInflate;
 
@@ -40,7 +40,6 @@ public class LottoAdapter extends RecyclerView.Adapter<LottoAdapter.Holder> {
 
         holder.LottoNum.setText(m_Datas.get(position).LottoNum);
         holder.WinNum.setText(m_Datas.get(position).WinNum);
-        Log.e("adapter", "adapter = " + position);
     }
 
     @Override

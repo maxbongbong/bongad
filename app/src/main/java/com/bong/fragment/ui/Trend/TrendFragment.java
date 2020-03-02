@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bong.fragment.MainActivity;
 import com.bong.fragment.R;
 
 import java.util.ArrayList;
@@ -47,6 +48,7 @@ public class TrendFragment extends Fragment {
 
         LottoAdapter adapter = new LottoAdapter(context, data);
         recyclerView.setAdapter(adapter);
+        ((MainActivity)getActivity()).Toolbar(3);
         return rootView;
     }
 
@@ -96,11 +98,8 @@ public class TrendFragment extends Fragment {
                 int value = sortedMap.get(key);
                 String val = Integer.toString(value);
                 data.add(new LottoNum("No."+ key, val + " times"))  ;
-
-                Log.e("fureun", "key = " + key + " value = " + value);
-
             }catch(Exception e){
-
+                e.printStackTrace();
             }
         }
 
