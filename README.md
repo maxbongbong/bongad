@@ -254,64 +254,154 @@ fragment_main 을 view로 리턴
         return rootView;
     }
 onViewCreated에 버튼 리스너들 구현하고, generateBtn을 클릭시 - EditText인 tv_result의 텍스트 값이 변하는것에 따라 버튼과 레이아웃 구성합니다.
-입력되는 EditText에 변화가 있으면 v_result의 할당된 구역과 레이아웃이 사라지고, generateBtn과 result_bt은 tv_result의 값이 0이 아니면 활성화되고 0일시에 비활성화 된다.
+입력되는 EditText에 변화가 있으면 v_result의 할당된 구역과 레이아웃이 사라지고, generateBtn은 tv_result의 문자열 길이가 0이 아니면 활성화되고 0일시에 비활성화 된다.
 
-    generateBtn.setOnClickListener(v -> {
-      tv_result.addTextChangedListener(new TextWatcher() {
-        //입력전
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-        //입력되는 EditText에 변화가 있을때
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-          layout.setVisibility(View.GONE);
-        }
-        //입력후
-        @Override
-        public void afterTextChanged(Editable s) {
-          String text = s.toString();
-            if (text.length() != 0) {
-              result_bt.setEnabled(true);
-              generateBtn.setEnabled(true);//버튼 활성화
-              String drwNo = tv_result.getText().toString();
-              int num = Integer.parseInt(drwNo);
-              if (num > 0 && num < 51) {
-                result_bt.setOnClickListener(v -> {
-                  callAPIs();
-                });
-              } else {
-              //결과보기 버튼 클릭 시 다이얼로그 생성(당첨번호와 회차번호 비교 후 등수 출력)
-                result_bt.setOnClickListener(v -> {
-                  if (flag) {
+        //생성하기 버튼
+        Button generate = getView().findViewById(R.id.bt_generate);
+        generate.setEnabled(false);
+        tv_result = getView().findViewById(R.id.tv_event_number);
+        View view1 = getView().findViewById(R.id.v_result);
+        tv_result.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                view1.setVisibility(View.GONE);
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                String text = s.toString();
+                if (text.length() != 0) {
+                    generate.setEnabled(true);
+                }else{
+                    generate.setEnabled(false);
+                }
+            }
+        });
+
+생성버튼 클릭 리스너 - EditText값을 int로 형변환한 값이 0보다 크고 51보다 작아야한다. 만약 1~50의 숫자가 아닐시 다이얼로그가 출력 되고,
+1~50사이의 숫자 일시 tv_result가 출력 되고, 1등수를 확인 할 수 있는 result_bt(결과보기 버튼)이 나온다.
+
+        //생성버튼 클릭 리스너
+        generate.setOnClickListener(v -> {
+            String drwNo = tv_result.getText().toString();
+            int num = Integer.parseInt(drwNo);
+            if (num > 0 && num < 51) {
+                view1.setVisibility(View.VISIBLE);
+                showToast();
+                getLottoTicket();
+                tv_generate = getView().findViewById(R.id.tv_lotto);
+                tv_generate.setText(convertIntoString(Result));
+            }else{
+                if (flag) {
+                    //다이얼로그 띄우기(1보다 작고 50보다 크면 출력)
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setTitle(R.string.notification);
                     builder.setMessage(R.string.possible);
-                    builder.setPositiveButton(R.string.check, new                                             DialogInterface.OnClickListener() {
-                      @Override
-                      public void onClick(DialogInterface dialog, int which) {
-                        flag = false;
-                        Toast.makeText(getActivity(), R.string.check, Toast.LENGTH_LONG);
-                      }
+                    builder.setPositiveButton(R.string.check, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Toast.makeText(getActivity(), R.string.check, Toast.LENGTH_LONG);
+                        }
                     });
                     builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                      @Override
-                      public void onCancel(DialogInterface dialog) {
-                        flag = true;
-                      }
+                        @Override
+                        public void onCancel(DialogInterface dialog) {
+                            flag = true;
+                            dialog.dismiss();
+                        }
                     });
                     builder.show();
                     flag = false;
-                 }
-               });
-             }
-           } else {
-               result_bt.setEnabled(false);//버튼 비활성
-               generateBtn.setEnabled(false);
-           }
-         }
-       });
-     })
+                }
+            }
+            //결과보기 버튼
+            Button result_bt = getView().findViewById(R.id.bt_match);
+            result_bt.setOnClickListener(v1 -> {
+                callAPIs();
+            });
+            flag = true;
+        });
+    }
+    
+복수통신으로 retrofit클라이언트를 이용한 비동기 으로 당첨 번호를 ArrayList<Integer> temp넣어서 show메소드로 넣어줌
+
+    void callAPIs() {
+
+        int i = Integer.parseInt(tv_result.getText().toString());
+        Apiservice apiService = new RetrofitMaker().createService(getActivity(), Apiservice.class);
+        Call<Lotto> commentStr = apiService.getComment(i);
+        commentStr.enqueue(new Callback<Lotto>() {
+            @Override
+            public void onResponse(Call<Lotto> call, Response<Lotto> response) {
+                boolean isSuccessful = response.isSuccessful();
+                if (isSuccessful) {
+                    Lotto lotto = response.body();
+                    ArrayList<Integer> temp = new ArrayList<>();
+                    temp.add(lotto.drwtNo1);
+                    temp.add(lotto.drwtNo2);
+                    temp.add(lotto.drwtNo3);
+                    temp.add(lotto.drwtNo4);
+                    temp.add(lotto.drwtNo5);
+                    temp.add(lotto.drwtNo6);
+                    temp.add(lotto.bnusNo);
+
+                    show(temp);
+                }
+            }
+            @Override
+            public void onFailure(Call<Lotto> call, Throwable t) {
+            }
+        });
+    }
+
+결과보기 버튼 클릭시 등수와 다이얼로그 출력.
+    
+    void show(List<Integer> Win){
+        if (flag) {
+            androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(getActivity());
+            builder.setTitle(R.string.result);
+
+            String str = convertIntoString(Result);
+            String str1 = convertIntoString(Win);
+            String drwNo = tv_result.getText().toString();
+
+            builder.setMessage("나의 번호 = [" + str + "]\n" + drwNo + "회번호 = [" + str1 + "]\n" + LottoRank(Win));
+            builder.setPositiveButton(R.string.check, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    flag = true;
+                    Toast.makeText(getActivity(),R.string.check, Toast.LENGTH_LONG).show();
+                }
+            });
+
+            builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) { flag = true; }
+            });
+            builder.show();
+            flag = false;
+        }
+    }
+    
+스트링 빌더를 이용해서 List<Integer>형식을 String형식으로 형변환 시켜주는 메소드.
      
+    private String convertIntoString(List<Integer> change) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < change.size(); i++) {
+            if (sb.length() > 0) {
+                if (i == change.size() - 1) {
+                    sb.append(" + ");
+                } else {
+                    sb.append(", ");
+                }
+            }
+            sb.append(change.get(i));
+        }
+        return sb.toString();
+    }
 >MainActivity
 
 Mainactivity생성시 activity_main 레이아웃을 view로 return하고, splashfragment를 띄워주고 툴바는 안보이게 합니다.
@@ -350,7 +440,7 @@ Toolbar(int num)은 각각의 프래그먼트에 따라 setTitle로 제목을 �
         }
     }
 
-enum을 사용해서 코드가 단순해지며 가독성이 좋습니다. 인스턴스 생성과 상속을 방지합니다.
+enum을 사용해서 코드가 단순해지며 가독성이 좋고, 인스턴스 생성과 상속을 방지합니다.
 
     public enum Type {
         splash, home, trend, history
