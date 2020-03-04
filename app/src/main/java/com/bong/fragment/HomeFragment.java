@@ -277,7 +277,7 @@ public class HomeFragment extends Fragment {
         } else if (cnt == 5 && bns == 0) {
             str = "5개 맞았습니다. 3등!";
         } else if (cnt == 5 && bns == 1) {
-            str = "5개 + 보너스!! 2등!.";
+            str = "5개 + 보너스!! 2등!";
         } else if (cnt == 6) {
             str = "6개 맞았습니다. 1등!츄카포카";
         } else if (cnt == 1) {
