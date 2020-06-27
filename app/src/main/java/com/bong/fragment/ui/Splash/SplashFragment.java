@@ -18,8 +18,10 @@ import com.bong.fragment.data.Lotto;
 import com.bong.fragment.network.RetrofitMaker;
 import com.bong.fragment.room.AppDatabase;
 import com.bong.fragment.room.LottoDao;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -36,8 +38,8 @@ public class SplashFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View rootView = (View)inflater.inflate(R.layout.fragment_splash, container, false);
-        ActionBar actionBar = ((MainActivity)getActivity()).getSupportActionBar();
+        View rootView = inflater.inflate(R.layout.fragment_splash, container, false);
+        ActionBar actionBar = ((MainActivity) getActivity()).getSupportActionBar();
         disposables = new CompositeDisposable();
         dao = AppDatabase.getDatabase(getActivity()).getLottoDao();
         getLottoAndSave();
@@ -61,7 +63,7 @@ public class SplashFragment extends Fragment {
         return sb.toString();
     }
 
-    void send(ArrayList<String>list, ArrayList<String>str, ArrayList<Integer>pre){
+    void send(ArrayList<String> list, ArrayList<String> str, ArrayList<Integer> pre) {
         homeFragment = new HomeFragment();
         Bundle args = new Bundle();
         args.putStringArrayList("list", list);
@@ -70,22 +72,22 @@ public class SplashFragment extends Fragment {
         homeFragment.setArguments(args);
     }
 
-    public void getLottoAndSave(){
+    public void getLottoAndSave() {
         Apiservice apiService = new RetrofitMaker().createService(getActivity(), Apiservice.class);
 
-        ArrayList<String>list = new ArrayList<>();
+        ArrayList<String> list = new ArrayList<>();
         ArrayList<String> str = new ArrayList<>();
-        ArrayList<Integer>pre = new ArrayList<>();
+        ArrayList<Integer> pre = new ArrayList<>();
 
         // 복수개 통신
-        ArrayList<Single<Lotto>> temp = new ArrayList<Single<Lotto>>();
-        for(int i = 1; i <= 50; i++){
+        ArrayList<Single<Lotto>> temp = new ArrayList<>();
+        for (int i = 1; i <= 50; i++) {
             temp.add(
                     apiService.getCommentRx(i)
                             .map(lotto -> {
 
-                                ArrayList<Integer>num = new ArrayList<>();
-                                ArrayList<Integer>win = new ArrayList<>();
+                                ArrayList<Integer> num = new ArrayList<>();
+                                ArrayList<Integer> win = new ArrayList<>();
                                 num.add(lotto.drwNo);
                                 win.add(lotto.drwtNo1);
                                 win.add(lotto.drwtNo2);
@@ -96,7 +98,7 @@ public class SplashFragment extends Fragment {
                                 win.add(lotto.bnusNo);
 
                                 list.add("" + num.get(0));
-                                for(int j = 0; j < win.size(); j++){
+                                for (int j = 0; j < win.size(); j++) {
                                     pre.add(win.get(j));
                                 }
                                 str.add(convertIntoString(win));
@@ -109,16 +111,21 @@ public class SplashFragment extends Fragment {
         final boolean add = disposables.add(Single.concat(temp)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSubscriber<Lotto>(){
+                .subscribeWith(new DisposableSubscriber<Lotto>() {
                     @Override
-                    public void onNext(Lotto lotto) {}
+                    public void onNext(Lotto lotto) {
+                    }
+
                     @Override
-                    public void onError(Throwable t) { t.printStackTrace(); }
+                    public void onError(Throwable t) {
+                        t.printStackTrace();
+                    }
+
                     @Override
                     public void onComplete() {
 
                         send(list, str, pre);
-                        ((MainActivity)getActivity()).changeFragment(MainActivity.Type.home, homeFragment);
+                        ((MainActivity) getActivity()).changeFragment(MainActivity.Type.home, homeFragment);
                     }
                 }));
     }
