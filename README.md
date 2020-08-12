@@ -2,7 +2,7 @@
 
 ## 🚀 Lotto Demo App
 
-사용 된 스킬 : Retrofit, Room, Http3, Single Activity + Multiple Fragment, RecyclerView
+사용 된 스킬 : Retrofit, Room, Http3, Single Activity + Multiple Fragments, RecyclerView
 
 ### 👋1. data폴더
 
