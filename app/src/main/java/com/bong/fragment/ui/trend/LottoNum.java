@@ -1,4 +1,4 @@
-package com.bong.fragment.ui.History;
+package com.bong.fragment.ui.trend;
 
 class LottoNum {
 

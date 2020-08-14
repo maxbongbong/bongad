@@ -8,12 +8,9 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 
-import com.bong.fragment.ui.Splash.SplashFragment;
+import com.bong.fragment.ui.splash.SplashFragment;
 
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -50,13 +47,14 @@ public class MainActivity extends AppCompatActivity {
     public enum Type {
         splash, home, trend, history
     }
+
     public void changeFragment(Type type, Fragment fragment){
 
         //화면 전환 프레그먼트 선언 및 초기화면 설정
         //프레그먼트 매니저로 추가, 삭제, 대체 가능
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.setCustomAnimations(R.anim.slide_in_right_left, R.anim.fragment_close_exit);
+        transaction.setCustomAnimations(R.anim.slide_in_right_left, R.anim.push_down_out);
         if (type.ordinal() <=1) {
             transaction.replace(R.id.contentFrame, fragment).commit();
         }else if(type.ordinal() > 1){

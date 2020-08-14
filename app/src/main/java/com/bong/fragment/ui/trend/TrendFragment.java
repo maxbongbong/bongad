@@ -1,8 +1,7 @@
-package com.bong.fragment.ui.Trend;
+package com.bong.fragment.ui.trend;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

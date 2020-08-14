@@ -1,8 +1,7 @@
-package com.bong.fragment.ui.History;
+package com.bong.fragment.ui.history;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,6 @@ import com.bong.fragment.MainActivity;
 import com.bong.fragment.R;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class HistoryFragment extends Fragment {
 

@@ -1,12 +1,10 @@
 package com.bong.fragment;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +20,8 @@ import androidx.fragment.app.Fragment;
 import com.bong.fragment.data.Apiservice;
 import com.bong.fragment.data.Lotto;
 import com.bong.fragment.network.RetrofitMaker;
-import com.bong.fragment.ui.History.HistoryFragment;
-import com.bong.fragment.ui.Trend.TrendFragment;
+import com.bong.fragment.ui.history.HistoryFragment;
+import com.bong.fragment.ui.trend.TrendFragment;
 
 import java.util.ArrayList;
 import java.util.Collections;

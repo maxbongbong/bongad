@@ -1,6 +1,8 @@
 package com.bong.fragment;
 
 import android.app.Application;
+
+import com.facebook.stetho.BuildConfig;
 import com.facebook.stetho.Stetho;
 
 public class AppApplication extends Application {

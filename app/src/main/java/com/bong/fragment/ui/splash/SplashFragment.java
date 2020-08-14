@@ -1,4 +1,4 @@
-package com.bong.fragment.ui.Splash;
+package com.bong.fragment.ui.splash;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
